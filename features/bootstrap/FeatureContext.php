@@ -32,10 +32,11 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function iClickOnText($text)
     {
         $session = $this->getSession();
-        $element = $session->getPage()->find(
+		$element = $session->getPage()->find('named', array('link', $text));
+        /*$element = $session->getPage()->find(
             'xpath',
             $session->getSelectorsHandler()->selectorToXpath('xpath', '*//*[text()="'. $text .'"]')
-        );
+        ); */
         if (null === $element) {
             throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $text));
         }
@@ -156,14 +157,14 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                               $fileName = preg_replace('/\W/', '', $scenarioName) . '.png';
 
                 //create screenshots directory if it doesn't exist
-                if (!file_exists('report/screenshots' . $featureFolder)) {
-                    mkdir('report/screenshots' . $featureFolder);
+                if (!file_exists('report/screenshots_' . $featureFolder)) {
+                    mkdir('report/screenshots_' . $featureFolder);
                 }
 
                 //take screenshot and save as the previously defined filename
                 //$this->driver->takeScreenshot('report/screenshots' . $featureFolder . '/' . $fileName);
                 // For Selenium2 Driver you can use:
-                file_put_contents('report/screenshots' . $featureFolder . '/' . $fileName, $this->getSession()->getDriver()->getScreenshot());
+                file_put_contents('report/screenshots_' . $featureFolder . '/' . $fileName, $this->getSession()->getDriver()->getScreenshot());
             }
         }	  
 }

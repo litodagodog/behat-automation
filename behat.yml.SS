@@ -1,4 +1,5 @@
 default:
+
     formatters:
         html:
             output_path: %paths.base%/report

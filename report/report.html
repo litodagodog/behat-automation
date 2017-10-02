@@ -54,21 +54,21 @@
             <div class="canvas-holder">
                 <canvas id="chart-features" width="300" height="300"/>
             </div>
-            1 features failed of 2
+            0 features failed of 1
             features
         </div>
         <div class="col-sm-4">
             <div class="canvas-holder">
                 <canvas id="chart-scenarios" width="300" height="300"/>
             </div>
-            1 scenarios failed of 4
+            0 scenarios failed of 2
             scenarios
         </div>
         <div class="col-sm-4">
             <div class="canvas-holder">
                 <canvas id="chart-steps" width="300" height="300"/>
             </div>
-            1 steps failed of 20
+            0 steps failed of 8
         </div>
     </div>
     <hr>
@@ -87,11 +87,11 @@
                                                     <div class="col-sm-4 feature" data-id="feature-1">
                                 <div class="card passed">
                                     <div class="header">
-                                        <h2>Feature: Login as Admin Credentials</h2>
+                                        <h2>Feature: Search for a Client</h2>
                                     </div>
                                     <div class="info">
-                                        <p>  As an admin user<br />
-  I will be able to login to my account</p>
+                                        <p>  As a website user<br />
+  I need to be able to search for a client</p>
                                     </div>
                                     <div class="footer">
                                         <div class="tags">
@@ -110,32 +110,6 @@
                                                                             </div>
                                 </div>
                             </div>
-                                                    <div class="col-sm-4 feature" data-id="feature-2">
-                                <div class="card failed">
-                                    <div class="header">
-                                        <h2>Feature: Search for a Client</h2>
-                                    </div>
-                                    <div class="info">
-                                        <p>  As a website user<br />
-  I need to be able to search for a client</p>
-                                    </div>
-                                    <div class="footer">
-                                        <div class="tags">
-                                                                                    </div>
-                                                                                    <div class="progress">
-
-                                                <div class="progress-bar progress-bar-green" role="progressbar"
-                                                     style="width: 50%">
-                                                    <span class="sr-only">40% Complete (success)</span>
-                                                </div>
-                                                <div class="progress-bar progress-bar-red" role="progressbar"
-                                                     style="width: 50%">
-                                                    <span class="sr-only">40% Complete (success)</span>
-                                                </div>
-                                            </div>
-                                                                            </div>
-                                </div>
-                            </div>
                                             </div>
                 </div>
             </div>
@@ -146,11 +120,11 @@
                     <div class="col-sm-4">
                         <div class="card passed">
                             <div class="header">
-                                <h2>Feature: Login as Admin Credentials</h2>
+                                <h2>Feature: Search for a Client</h2>
                             </div>
                             <div class="info">
-                                <p>  As an admin user<br />
-  I will be able to login to my account</p>
+                                <p>  As a website user<br />
+  I need to be able to search for a client</p>
                             </div>
                             <div class="footer">
                                 <div class="tags">
@@ -177,117 +151,6 @@
                                            href="#scenario-1-1"
                                            aria-expanded="true"
                                            aria-controls="scenario-1-1">
-                                            Scenario: Open site and login as admin
-                                        </a>
-
-                                        <div class="tags pull-right">
-                                                                                    </div>
-                                    </h4>
-                                </div>
-                                <div id="scenario-1-1" class="panel-collapse collapse in"
-                                     role="tabpanel"
-                                     aria-labelledby="headingOne">
-                                    <ul class="list-group">
-                                                                                    <li class="list-group-item alert alert-success">
-                                                <b>Given</b> I am on &quot;/&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>When</b> I click on login &quot;Client Login&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>And</b> I wait for &quot;5&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>When</b> I fill in &quot;username&quot; with &quot;lito.dagodog&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>When</b> I fill in &quot;password&quot; with &quot;Y493SrNV&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>When</b> I click the loginAdmin &quot;Log in&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>And</b> I wait for &quot;8&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>Then</b> I should be on &quot;/admin&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>Then</b> I should see &quot;Clients&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                </ul>
-                                </div>
-                            </div>
-                                                    <div class="panel panel-default passed">
-                                <div class="panel-heading" role="tab">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion"
-                                           href="#scenario-1-2"
-                                           aria-expanded="true"
-                                           aria-controls="scenario-1-2">
-                                            Scenario: Logout admin account
-                                        </a>
-
-                                        <div class="tags pull-right">
-                                                                                    </div>
-                                    </h4>
-                                </div>
-                                <div id="scenario-1-2" class="panel-collapse collapse in"
-                                     role="tabpanel"
-                                     aria-labelledby="headingOne">
-                                    <ul class="list-group">
-                                                                                    <li class="list-group-item alert alert-success">
-                                                <b>When</b> I click on logout &quot;logout&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>And</b> I wait for &quot;5&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>Then</b> I should be on &quot;/&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>Then</b> I should see &quot;Start Your Review Here!&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                </ul>
-                                </div>
-                            </div>
-                                            </div>
-                </div>
-                            <div class="feature" data-id="feature-2">
-                    <div class="col-sm-4">
-                        <div class="card failed">
-                            <div class="header">
-                                <h2>Feature: Search for a Client</h2>
-                            </div>
-                            <div class="info">
-                                <p>  As a website user<br />
-  I need to be able to search for a client</p>
-                            </div>
-                            <div class="footer">
-                                <div class="tags">
-                                                                    </div>
-                                                                    <div class="progress">
-
-                                        <div class="progress-bar progress-bar-green" role="progressbar"
-                                             style="width: 50%">
-                                            <span class="sr-only">40% Complete (success)</span>
-                                        </div>
-                                        <div class="progress-bar progress-bar-red" role="progressbar"
-                                             style="width: 50%">
-                                            <span class="sr-only">40% Complete (success)</span>
-                                        </div>
-                                    </div>
-                                                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-8 details panel-group" role="tablist" aria-multiselectable="true">
-                                                    <div class="panel panel-default passed">
-                                <div class="panel-heading" role="tab">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion"
-                                           href="#scenario-2-1"
-                                           aria-expanded="true"
-                                           aria-controls="scenario-2-1">
                                             Scenario: Searching for a client
                                         </a>
 
@@ -295,7 +158,7 @@
                                                                                     </div>
                                     </h4>
                                 </div>
-                                <div id="scenario-2-1" class="panel-collapse collapse in"
+                                <div id="scenario-1-1" class="panel-collapse collapse in"
                                      role="tabpanel"
                                      aria-labelledby="headingOne">
                                     <ul class="list-group">
@@ -314,13 +177,13 @@
                                                                                                                                                                                                                 </ul>
                                 </div>
                             </div>
-                                                    <div class="panel panel-default failed">
+                                                    <div class="panel panel-default passed">
                                 <div class="panel-heading" role="tab">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion"
-                                           href="#scenario-2-2"
+                                           href="#scenario-1-2"
                                            aria-expanded="true"
-                                           aria-controls="scenario-2-2">
+                                           aria-controls="scenario-1-2">
                                             Scenario: Click the specific client
                                         </a>
 
@@ -328,7 +191,7 @@
                                                                                     </div>
                                     </h4>
                                 </div>
-                                <div id="scenario-2-2" class="panel-collapse collapse in"
+                                <div id="scenario-1-2" class="panel-collapse collapse in"
                                      role="tabpanel"
                                      aria-labelledby="headingOne">
                                     <ul class="list-group">
@@ -338,12 +201,10 @@
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
                                                 <b>And</b> I wait for &quot;5&quot;
                                                                                                                                                                                                                                                                                                                                                 </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-danger">
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
                                                 <b>When</b> I click on text &quot;quitters&quot;
-                                                                                                                                                                                                                                                        <br>
-                                                    <p style="padding-left:2em ; color:gray">(Cannot find text: &quot;quitters&quot;)</p>
-                                                                                                                                                                                            </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-info">
+                                                                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
                                                 <b>Then</b> I should see &quot;Who Helped You?&quot;
                                                                                                                                                                                                                                                                                                                                                 </li>
                                                                                                                                                                                                                 </ul>
@@ -362,7 +223,7 @@
 <script type="text/javascript">
     var featureData = [
         {
-            value: 1,
+            value: 0,
             color: "#F7464A",
             highlight: "#FF5A5E",
             label: "Failed"
@@ -377,13 +238,13 @@
 
     var scenarioData = [
         {
-            value: 1,
+            value: 0,
             color: "#F7464A",
             highlight: "#FF5A5E",
             label: "Failed"
         },
         {
-            value: 3,
+            value: 2,
             color: "#00a65a",
             highlight: "#5AD3D1",
             label: "Passed"
@@ -392,13 +253,13 @@
 
     var stepData = [
         {
-            value: 1,
+            value: 0,
             color: "#F7464A",
             highlight: "#FF5A5E",
             label: "Failed"
         },
         {
-            value: 19,
+            value: 8,
             color: "#00a65a",
             highlight: "#5AD3D1",
             label: "Passed"
