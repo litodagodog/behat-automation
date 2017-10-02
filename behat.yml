@@ -2,7 +2,7 @@ default:
 
     formatters:
         html:
-            output_path: %paths.base%/build/html/behat
+            output_path: %paths.base%/report
     extensions:
         Behat\MinkExtension:
             base_url: https://stage.reviewbuzz.com
@@ -16,8 +16,8 @@ default:
             purge: true   
         emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
             name: html
-            renderer: Twig,Behat2
-            file_name: index
+            renderer: Twig
+            file_name: Report
             print_args: true
             print_outp: true
             loop_break: true            

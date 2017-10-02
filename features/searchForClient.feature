@@ -10,5 +10,6 @@ Feature: Search for a Client
 
     Scenario: Click the specific client
         Given I am on "/search_results?q=quitters"
+		And I wait for "5"
 		When I click on text "quitters"
 		Then I should see "Who Helped You?"

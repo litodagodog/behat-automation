@@ -156,14 +156,14 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                               $fileName = preg_replace('/\W/', '', $scenarioName) . '.png';
 
                 //create screenshots directory if it doesn't exist
-                if (!file_exists('screenshots/' . $featureFolder)) {
-                    mkdir('screenshots/' . $featureFolder);
+                if (!file_exists('report/screenshots' . $featureFolder)) {
+                    mkdir('report/screenshots' . $featureFolder);
                 }
 
                 //take screenshot and save as the previously defined filename
-                #$this->driver->takeScreenshot('screenshots/' . $featureFolder . '/' . $fileName);
+                //$this->driver->takeScreenshot('report/screenshots' . $featureFolder . '/' . $fileName);
                 // For Selenium2 Driver you can use:
-                file_put_contents('screenshots/' . $featureFolder . '/' . $fileName, $this->getSession()->getDriver()->getScreenshot());
+                file_put_contents('report/screenshots' . $featureFolder . '/' . $fileName, $this->getSession()->getDriver()->getScreenshot());
             }
         }	  
 }
