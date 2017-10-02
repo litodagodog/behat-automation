@@ -86,16 +86,23 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
   /**
    * @AfterStep
    */
-  public function takeScreenShotAfterFailedStep(afterStepScope $scope)
-  {
-    if (99 === $scope->getTestResult()->getResultCode()) {
-      $driver = $this->getSession()->getDriver();
-      if (!($driver instanceof Selenium2Driver)) {
-        return;
-      }
-      file_put_contents('screenshots/FAILED_screenshot.png', $this->getSession()->getDriver()->getScreenshot());
-    }
-  }
+	  public function takeScreenShotAfterFailedStep(afterStepScope $scope)
+	  {
+		if (99 === $scope->getTestResult()->getResultCode()) {
+		  $driver = $this->getSession()->getDriver();
+		  if (!($driver instanceof Selenium2Driver)) {
+			return;
+		  }
+		 $filename = sprintf(
+			'%s_%s_%s.%s',
+			$this->getMinkParameter('browser_name'),
+			date('Ymd') . '-' . date('His'),
+			uniqid('', true),
+			'png'
+		);
+		  file_put_contents('screenshots/'.$filename, $this->getSession()->getDriver()->getScreenshot());
+		}
+	  } 
 
     /**
      * @Then take screenshot
@@ -103,7 +110,14 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function takeScreenshot()
     {
 		$image_data = $this->getSession()->getDriver()->getScreenshot();
-		$file_and_path = 'screenshots/SUCCESS_screenshot.jpg';
+		$filename = sprintf(
+			'%s_%s_%s.%s',
+			$this->getMinkParameter('browser_name'),
+			date('Ymd') . '-' . date('His'),
+			uniqid('', true),
+			'png'
+		);		
+		$file_and_path = 'screenshots/'.$filename;
 		file_put_contents($file_and_path, $image_data);
     }
 

@@ -16,7 +16,6 @@ Feature: Login as Admin Credentials
 		
 	Scenario: Logout admin account
         #Given I am on "/admin"
-		And I wait for "5"
 		When I click on logout "logout"
 		And I wait for "5"
 		Then I should be on "/"

@@ -9,4 +9,4 @@ default:
         IntegratedExperts\BehatScreenshotExtension:
             dir: %paths.base%/screenshots
             fail: true
-            purge: false            
+            purge: true        
