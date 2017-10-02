@@ -9,6 +9,16 @@ use Behat\Behat\Hook\Scope\AfterStepScope;
 
 class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
 {
+        /**
+         * @BeforeScenario
+         *
+         * @param BeforeScenarioScope $scope
+         *
+         */
+        public function setUpTestEnvironment($scope)
+        {
+            $this->currentScenario = $scope->getScenario();
+        }	
 	/**
 	   * @Given /^I set browser window size to "([^"]*)" x "([^"]*)"$/
 	   */
@@ -83,10 +93,35 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 			$findName->click();
 		}
     }
+    /**
+     * @When I click on logout :arg1
+     */
+    public function iClickOnLogout($element)
+    {
+        $page = $this->getSession()->getPage();
+		$findName = $page->find("css", "#admin-topmenu>a:nth-child(2)>li");
+		if (!$findName) {
+			throw new Exception($element . " could not be found");
+		} else {
+			$findName->click();
+		}
+    }
+
+    /**
+     * @Then I save a screenshot to :arg1
+     */
+    /***public function iSaveAScreenshotTo($filename)
+    {
+		if (!is_dir('screenshots')) {
+			mkdir('screenshots', 0777, true);
+		}		
+        sleep(1);
+        $this->saveScreenshot($filename,'screenshots/');
+    } */
   /**
    * @AfterStep
    */
-	  public function takeScreenShotAfterFailedStep(afterStepScope $scope)
+	/***  public function takeScreenShotAfterFailedStep(afterStepScope $scope)
 	  {
 		if (99 === $scope->getTestResult()->getResultCode()) {
 		  $driver = $this->getSession()->getDriver();
@@ -102,36 +137,33 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 		);
 		  file_put_contents('screenshots/'.$filename, $this->getSession()->getDriver()->getScreenshot());
 		}
-	  } 
+	  }  */
+        /**
+         * @AfterStep
+         *
+         * @param AfterStepScope $scope
+         */
+        public function afterStep($scope)
+        {
+            //if test has failed, and is not an api test, get screenshot
+            if(!$scope->getTestResult()->isPassed())
+            {
+                //create filename string
 
-    /**
-     * @Then take screenshot
-     */
-    public function takeScreenshot()
-    {
-		$image_data = $this->getSession()->getDriver()->getScreenshot();
-		$filename = sprintf(
-			'%s_%s_%s.%s',
-			$this->getMinkParameter('browser_name'),
-			date('Ymd') . '-' . date('His'),
-			uniqid('', true),
-			'png'
-		);		
-		$file_and_path = 'screenshots/'.$filename;
-		file_put_contents($file_and_path, $image_data);
-    }
+               $featureFolder = preg_replace('/\W/', '', $scope->getFeature()->getTitle());
+                  
+                              $scenarioName = $this->currentScenario->getTitle();
+                              $fileName = preg_replace('/\W/', '', $scenarioName) . '.png';
 
-    /**
-     * @When I click on logout :arg1
-     */
-    public function iClickOnLogout($element)
-    {
-        $page = $this->getSession()->getPage();
-		$findName = $page->find("css", "#admin-topmenu>a:nth-child(2)>li");
-		if (!$findName) {
-			throw new Exception($element . " could not be found");
-		} else {
-			$findName->click();
-		}
-    }
+                //create screenshots directory if it doesn't exist
+                if (!file_exists('screenshots/' . $featureFolder)) {
+                    mkdir('screenshots/' . $featureFolder);
+                }
+
+                //take screenshot and save as the previously defined filename
+                #$this->driver->takeScreenshot('screenshots/' . $featureFolder . '/' . $fileName);
+                // For Selenium2 Driver you can use:
+                file_put_contents('screenshots/' . $featureFolder . '/' . $fileName, $this->getSession()->getDriver()->getScreenshot());
+            }
+        }	  
 }

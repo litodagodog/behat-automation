@@ -1,4 +1,8 @@
 default:
+
+    formatters:
+        html:
+            output_path: %paths.base%/build/html/behat
     extensions:
         Behat\MinkExtension:
             base_url: https://stage.reviewbuzz.com
@@ -9,4 +13,11 @@ default:
         IntegratedExperts\BehatScreenshotExtension:
             dir: %paths.base%/screenshots
             fail: true
-            purge: true        
+            purge: true   
+        emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
+            name: html
+            renderer: Twig,Behat2
+            file_name: index
+            print_args: true
+            print_outp: true
+            loop_break: true            

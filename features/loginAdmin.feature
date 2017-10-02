@@ -12,7 +12,7 @@ Feature: Login as Admin Credentials
 		And I wait for "8"
 		Then I should be on "/admin"
 		Then I should see "Clients"
-		Then take screenshot
+		#Then I save a screenshot to "Admin_Account.png"
 		
 	Scenario: Logout admin account
         #Given I am on "/admin"
@@ -20,5 +20,5 @@ Feature: Login as Admin Credentials
 		And I wait for "5"
 		Then I should be on "/"
 		Then I should see "Start Your Review Here!"
-		Then take screenshot
+		#Then I save a screenshot to "logoutAdmin.png"
 		
