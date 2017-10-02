@@ -19,7 +19,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      * @Given I click the :arg1
      */
     public function iClickTheElement($selector) // I also tried to use And I click the ".searchButton" but result is the same
-    {
+    /* {
         $page = $this->getSession()->getPage();
         $element = $page->find('css', $selector);
 
@@ -28,7 +28,19 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         }
 
         $element->click();
-    }	
+    }	*/
+	    {
+        $session = $this->getSession();
+        $element = $session->getPage()->find(
+            'xpath',
+            $session->getSelectorsHandler()->selectorToXpath('xpath', '*//a[text()="'. $text .'"]')
+        );
+        if (null === $element) {
+            throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $text));
+        }
+ 
+        $element->click();
+    }
     /**
      * @When /^I click li option "([^"]*)"$/
      *
@@ -67,17 +79,4 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
  
         $element->click();
     }
- /**
-   * @AfterStep
-
-  public function takeScreenShotAfterFailedStep(afterStepScope $scope)
-  {
-    if (99 === $scope->getTestResult()->getResultCode()) {
-      $driver = $this->getSession()->getDriver();
-      if (!($driver instanceof Selenium2Driver)) {
-        return;
-      }
-      file_put_contents('C:/behat/sample001/screenshots/test.png', $this->getSession()->getDriver()->getScreenshot());
-    }
-  }	*/
 }
