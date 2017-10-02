@@ -9,13 +9,14 @@ Feature: Login as Admin Credentials
 		When I fill in "username" with "lito.dagodog"
 		When I fill in "password" with "Y493SrNV"
 		When I click the loginAdmin "Log in"
-		And i wait for "8"
+		And I wait for "8"
 		Then I should be on "/admin"
 		Then I should see "Clients"
 		Then take screenshot
 		
 	Scenario: Logout admin account
-        Given I am on "/admin"
+        #Given I am on "/admin"
+		And I wait for "5"
 		When I click on logout "logout"
 		And I wait for "5"
 		Then I should be on "/"
