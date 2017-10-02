@@ -106,4 +106,18 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 		$file_and_path = 'screenshots/SUCCESS_screenshot.jpg';
 		file_put_contents($file_and_path, $image_data);
     }
+
+    /**
+     * @When I click on logout :arg1
+     */
+    public function iClickOnLogout($element)
+    {
+        $page = $this->getSession()->getPage();
+		$findName = $page->find("css", "#admin-topmenu>a:nth-child(2)>li");
+		if (!$findName) {
+			throw new Exception($element . " could not be found");
+		} else {
+			$findName->click();
+		}
+    }
 }

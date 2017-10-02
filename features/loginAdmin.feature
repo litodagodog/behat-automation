@@ -14,3 +14,11 @@ Feature: Login as Admin Credentials
 		Then I should see "Clients"
 		Then take screenshot
 		
+	Scenario: Logout admin account
+        Given I am on "/admin"
+		When I click on logout "logout"
+		And I wait for "5"
+		Then I should be on "/"
+		Then I should see "Start Your Review Here!"
+		Then take screenshot
+		
