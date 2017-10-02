@@ -4,10 +4,13 @@ Feature: Login as Admin Credentials
 
     Scenario: Open site and login as admin
         Given I am on "/"
-		#When I press "Client Login"
 		When I click on login "Client Login"
 		And I wait for "5"
 		When I fill in "username" with "lito.dagodog"
 		When I fill in "password" with "Y493SrNV"
-		Then I should see "Username or Email"
+		When I click the loginAdmin "Log in"
+		And i wait for "8"
+		Then I should be on "/admin"
+		Then I should see "Clients"
+		Then take screenshot
 		

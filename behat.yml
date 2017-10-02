@@ -1,9 +1,4 @@
 default:
-    suites:
-        default:
-            contexts:
-                - IntegratedExperts\BehatScreenshotExtension\Context\ScreenshotContext
-                - FeatureContext
     extensions:
         Behat\MinkExtension:
             base_url: https://stage.reviewbuzz.com

@@ -15,53 +15,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 	  public function iSetBrowserWindowSizeToX($width, $height) {
 		$this->getSession()->resizeWindow((int)$width, (int)$height, 'current');
 	  }
-    /**
-     * @Given I click the :arg1
-     */
-    public function iClickTheElement($selector) // I also tried to use And I click the ".searchButton" but result is the same
-    /* {
-        $page = $this->getSession()->getPage();
-        $element = $page->find('css', $selector);
-
-        if (empty($element)) {
-            throw new Exception("No html element found for the selector ('$selector')");
-        }
-
-        $element->click();
-    }	*/
-	    {
-        $session = $this->getSession();
-        $element = $session->getPage()->find(
-            'xpath',
-            $session->getSelectorsHandler()->selectorToXpath('xpath', '*//a[text()="'. $text .'"]')
-        );
-        if (null === $element) {
-            throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $text));
-        }
- 
-        $element->click();
-    }
-    /**
-     * @When /^I click li option "([^"]*)"$/
-     *
-     * @param $text
-     * @throws \InvalidArgumentException
-     */
-    public function iClickLiOption($text)
-    {
-        $session = $this->getSession();
-        $element = $session->getPage()->find(
-            'xpath',
-            $session->getSelectorsHandler()->selectorToXpath('xpath', '*//*[text()="'. $text .'"]')
-        );
-
-        if (null === $element) {
-            throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $text));
-        }
-
-        $element->click();
-    }	
-
 
     /**
      * @Given I click on text :arg1
@@ -78,5 +31,79 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         }
  
         $element->click();
+    }
+
+    /**
+     * @When I click on Login :arg1
+     */
+    public function iClickOnLogin($arg1)
+    {
+    $page = $this->getSession()->getPage();
+    $findName = $page->find("css", "#header>div>div>div.header-line-login>div>a>span");
+    if (!$findName) {
+        throw new Exception($element . " could not be found");
+    } else {
+        $findName->click();
+    }
+ 
+    }
+
+    /**
+     * @When I click the element :arg1
+     */
+    public function iClickTheElement($element)
+    {
+    $page = $this->getSession()->getPage();
+    $findName = $page->find("css", "#header>div>div>div.header-line-login>div>a>span");
+    if (!$findName) {
+        throw new Exception($element . " could not be found");
+    } else {
+        $findName->click();
+    }
+ 
+    }
+    /**
+     * @When I wait for :arg1
+     */
+    public function iWaitFor($arg1)
+    {
+        sleep($arg1);
+    }
+
+    /**
+     * @When I click the loginAdmin :arg1
+     */
+    public function iClickTheLoginadmin($element)
+    {
+        $page = $this->getSession()->getPage();
+		$findName = $page->find("css", "#login_form>table>tbody>tr:nth-child(4)>td:nth-child(2)>table>tbody>tr>td:nth-child(3)>button>span");
+		if (!$findName) {
+			throw new Exception($element . " could not be found");
+		} else {
+			$findName->click();
+		}
+    }
+  /**
+   * @AfterStep
+   */
+  public function takeScreenShotAfterFailedStep(afterStepScope $scope)
+  {
+    if (99 === $scope->getTestResult()->getResultCode()) {
+      $driver = $this->getSession()->getDriver();
+      if (!($driver instanceof Selenium2Driver)) {
+        return;
+      }
+      file_put_contents('screenshots/FAILED_screenshot.png', $this->getSession()->getDriver()->getScreenshot());
+    }
+  }
+
+    /**
+     * @Then take screenshot
+     */
+    public function takeScreenshot()
+    {
+		$image_data = $this->getSession()->getDriver()->getScreenshot();
+		$file_and_path = 'screenshots/SUCCESS_screenshot.jpg';
+		file_put_contents($file_and_path, $image_data);
     }
 }
