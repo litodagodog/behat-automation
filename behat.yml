@@ -16,7 +16,7 @@ default:
         emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
             name: html
             renderer: Twig
-            file_name: Report
+            file_name: smokeReport
             print_args: true
             print_outp: true
             loop_break: true            

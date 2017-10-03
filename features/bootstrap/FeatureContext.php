@@ -6,9 +6,20 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Behat\Hook\Scope\AfterStepScope;
+use Behat\Gherkin\Node\TableNode;
 
 class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
 {
+		private $users = array();
+
+		/**
+		* @Given /^there are following users:$/
+		*/
+		public function thereAreFollowingUsers(TableNode $table) {
+			foreach ($table->getHash() as $row) {
+				$this->users[$row['username']] = $row;
+			}
+		}	
         /**
          * @BeforeScenario
          *
@@ -135,32 +146,89 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 		  file_put_contents('screenshots/'.$filename, $this->getSession()->getDriver()->getScreenshot());
 		}
 	  }  */
+    /**
+     * @When I press on :arg1 button
+     */
+    public function iPressOnButton($arg1)
+    {
+        $addPage = $this->getSession()->getPage();
+		$addNameClient = $addPage->find("css", "#add_client");
+		if (!$addNameClient) {
+			throw new Exception($arg1 . " could not be found");
+		} else {
+			$addNameClient->click();
+		}
+    }	  
         /**
          * @AfterStep
          *
          * @param AfterStepScope $scope
-         */
-        public function afterStep($scope)
-        {
-            //if test has failed, and is not an api test, get screenshot
-            if(!$scope->getTestResult()->isPassed())
-            {
-                //create filename string
+         */	  
 
-               $featureFolder = preg_replace('/\W/', '', $scope->getFeature()->getTitle());
-                  
-                              $scenarioName = $this->currentScenario->getTitle();
-                              $fileName = preg_replace('/\W/', '', $scenarioName) . '.png';
+    /**
+     * @When I am authenticated as :arg1
+     */
+    public function iAmAuthenticatedAs($username)
+    {
+		if (!isset($this->users[$username]['password'])) {
+			throw new \OutOfBoundsException('Invalid user '. $username);
+		}
 
-                //create screenshots directory if it doesn't exist
-                if (!file_exists('report/screenshots_' . $featureFolder)) {
-                    mkdir('report/screenshots_' . $featureFolder);
-                }
+		#$this->visit('/');
+		$this->fillField('username', $username);
+		$this->fillField('password', $this->users[$username]['password']);
+		$this->pressButton('Log In');	
+    }
+public function afterStep($scope)
+	{
+		//if test has failed, and is not an api test, get screenshot
+		if(!$scope->getTestResult()->isPassed())
+		{
+			//create filename string
 
-                //take screenshot and save as the previously defined filename
-                //$this->driver->takeScreenshot('report/screenshots' . $featureFolder . '/' . $fileName);
-                // For Selenium2 Driver you can use:
-                file_put_contents('report/screenshots_' . $featureFolder . '/' . $fileName, $this->getSession()->getDriver()->getScreenshot());
-            }
-        }	  
+			$featureFolder = preg_replace('/\W/', '', $scope->getFeature()->getTitle());
+
+			$scenarioName = $this->currentScenario->getTitle();
+			$fileName = preg_replace('/\W/', '', $scenarioName) . '.png';
+			/*
+			$stepF = $scope->getStep()->getText();
+			$fileName = preg_replace('/\W/', '', $stepF) . '.png';
+			*/
+
+			//create screenshots directory if it doesn't exist
+			if (!file_exists('report/screenshots_' . $featureFolder)) {
+				mkdir('report/screenshots_' . $featureFolder);
+			}
+
+			//take screenshot and save as the previously defined filename
+			//$this->driver->takeScreenshot('report/screenshots' . $featureFolder . '/' . $fileName);
+			// For Selenium2 Driver you can use:
+			file_put_contents('report/screenshots_' . $featureFolder . '/' . $fileName, $this->getSession()->getDriver()->getScreenshot());
+		}
+		//if test has passed, and is not an api test, get screenshot
+		else
+		{
+			//create filename string
+
+			$featureFolder = preg_replace('/\W/', '', $scope->getFeature()->getTitle());
+			$stepF = $scope->getStep()->getText();
+			  
+			$scenarioName = $this->currentScenario->getTitle();
+			$fileName = preg_replace('/\W/', '', $scenarioName) . '.png';
+			/*
+			$stepF = $scope->getStep()->getText();
+			$fileName = preg_replace('/\W/', '', $stepF) . '.png';
+			*/
+
+			//create screenshots directory if it doesn't exist
+			if (!file_exists('report/screenshots_' . $featureFolder)) {
+				mkdir('report/screenshots_' . $featureFolder);
+			}
+
+			//take screenshot and save as the previously defined filename
+			//$this->driver->takeScreenshot('report/screenshots' . $featureFolder . '/' . $fileName);
+			// For Selenium2 Driver you can use:
+			file_put_contents('report/screenshots_' . $featureFolder . '/' . $fileName, $this->getSession()->getDriver()->getScreenshot());
+		}			
+	}	
 }
