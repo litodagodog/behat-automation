@@ -203,23 +203,23 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         }	
 
     /**
-     * @When I see :arg1 button
-     */
-    public function iSeeButton($arg1)
-    {
-        $addPage = $this->getSession()->getPage();
-		$addNameClient = $addPage->find("css", '#'.$arg1);
-		if ($addNameClient) {
-			$addNameClient->click();
-		} else {
-		}
-    }
-
-    /**
      * @When I wait for :arg1 seconds
      */
     public function iWaitForSeconds($arg1)
     {
         sleep($arg1);
+    }
+
+    /**
+     * @Then I accept the term of use
+     */
+    public function iAcceptTheTermOfUse()
+    {
+        $addPage = $this->getSession()->getPage();
+		$addNameClient = $addPage->find("css", '#agree_button');
+		if ($addNameClient) {
+			$addNameClient->click();
+		} else {
+		}
     }
 }
