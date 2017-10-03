@@ -54,21 +54,21 @@
             <div class="canvas-holder">
                 <canvas id="chart-features" width="300" height="300"/>
             </div>
-            0 features failed of 2
+            1 features failed of 2
             features
         </div>
         <div class="col-sm-4">
             <div class="canvas-holder">
                 <canvas id="chart-scenarios" width="300" height="300"/>
             </div>
-            0 scenarios failed of 4
+            1 scenarios failed of 5
             scenarios
         </div>
         <div class="col-sm-4">
             <div class="canvas-holder">
                 <canvas id="chart-steps" width="300" height="300"/>
             </div>
-            0 steps failed of 21
+            1 steps failed of 25
         </div>
     </div>
     <hr>
@@ -111,13 +111,13 @@
                                 </div>
                             </div>
                                                     <div class="col-sm-4 feature" data-id="feature-2">
-                                <div class="card passed">
+                                <div class="card failed">
                                     <div class="header">
                                         <h2>Feature: Search for a Client</h2>
                                     </div>
                                     <div class="info">
                                         <p>  As a website user<br />
-  I need to be able to search for a client</p>
+  I will be able to search for a client</p>
                                     </div>
                                     <div class="footer">
                                         <div class="tags">
@@ -125,11 +125,11 @@
                                                                                     <div class="progress">
 
                                                 <div class="progress-bar progress-bar-green" role="progressbar"
-                                                     style="width: 100%">
+                                                     style="width: 66.666666666667%">
                                                     <span class="sr-only">40% Complete (success)</span>
                                                 </div>
                                                 <div class="progress-bar progress-bar-red" role="progressbar"
-                                                     style="width: 0%">
+                                                     style="width: 33.333333333333%">
                                                     <span class="sr-only">40% Complete (success)</span>
                                                 </div>
                                             </div>
@@ -255,13 +255,13 @@
                 </div>
                             <div class="feature" data-id="feature-2">
                     <div class="col-sm-4">
-                        <div class="card passed">
+                        <div class="card failed">
                             <div class="header">
                                 <h2>Feature: Search for a Client</h2>
                             </div>
                             <div class="info">
                                 <p>  As a website user<br />
-  I need to be able to search for a client</p>
+  I will be able to search for a client</p>
                             </div>
                             <div class="footer">
                                 <div class="tags">
@@ -269,11 +269,11 @@
                                                                     <div class="progress">
 
                                         <div class="progress-bar progress-bar-green" role="progressbar"
-                                             style="width: 100%">
+                                             style="width: 66.666666666667%">
                                             <span class="sr-only">40% Complete (success)</span>
                                         </div>
                                         <div class="progress-bar progress-bar-red" role="progressbar"
-                                             style="width: 0%">
+                                             style="width: 33.333333333333%">
                                             <span class="sr-only">40% Complete (success)</span>
                                         </div>
                                     </div>
@@ -347,6 +347,41 @@
                                                                                                                                                                                                                 </ul>
                                 </div>
                             </div>
+                                                    <div class="panel panel-default failed">
+                                <div class="panel-heading" role="tab">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion"
+                                           href="#scenario-2-3"
+                                           aria-expanded="true"
+                                           aria-controls="scenario-2-3">
+                                            Scenario: Select employee
+                                        </a>
+
+                                        <div class="tags pull-right">
+                                                                                    </div>
+                                    </h4>
+                                </div>
+                                <div id="scenario-2-3" class="panel-collapse collapse in"
+                                     role="tabpanel"
+                                     aria-labelledby="headingOne">
+                                    <ul class="list-group">
+                                                                                    <li class="list-group-item alert alert-success">
+                                                <b>Given</b> I am on &quot;/portal/feedback/who_helped_you?bc=1&amp;company=tactics&amp;start=1&quot;
+                                                                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
+                                                <b>And</b> I wait for &quot;5&quot;
+                                                                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
+                                                <b>When</b> I click on text &quot;tactics&quot;
+                                                                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-danger">
+                                                <b>Then</b> I should see &quot;Who Helped You?&quot;
+                                                                                                                                                                                                                                                        <br>
+                                                    <p style="padding-left:2em ; color:gray">(The text &quot;Who Helped You?&quot; was not found anywhere in the text of the current page.)</p>
+                                                                                                                                                                                            </li>
+                                                                                                                                                                                                                </ul>
+                                </div>
+                            </div>
                                             </div>
                 </div>
                         </div>
@@ -360,13 +395,13 @@
 <script type="text/javascript">
     var featureData = [
         {
-            value: 0,
+            value: 1,
             color: "#F7464A",
             highlight: "#FF5A5E",
             label: "Failed"
         },
         {
-            value: 2,
+            value: 1,
             color: "#00a65a",
             highlight: "#5AD3D1",
             label: "Passed"
@@ -375,7 +410,7 @@
 
     var scenarioData = [
         {
-            value: 0,
+            value: 1,
             color: "#F7464A",
             highlight: "#FF5A5E",
             label: "Failed"
@@ -390,13 +425,13 @@
 
     var stepData = [
         {
-            value: 0,
+            value: 1,
             color: "#F7464A",
             highlight: "#FF5A5E",
             label: "Failed"
         },
         {
-            value: 21,
+            value: 24,
             color: "#00a65a",
             highlight: "#5AD3D1",
             label: "Passed"

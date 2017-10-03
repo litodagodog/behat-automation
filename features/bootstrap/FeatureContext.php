@@ -33,10 +33,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         $session = $this->getSession();
 		$element = $session->getPage()->find('named', array('link', $text));
-        /*$element = $session->getPage()->find(
-            'xpath',
-            $session->getSelectorsHandler()->selectorToXpath('xpath', '*//*[text()="'. $text .'"]')
-        ); */
         if (null === $element) {
             throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $text));
         }
@@ -47,7 +43,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     /**
      * @When I click on Login :arg1
      */
-    public function iClickOnLogin($arg1)
+    public function iClickOnLogin($element)
     {
     $page = $this->getSession()->getPage();
     $findName = $page->find("css", "#header>div>div>div.header-line-login>div>a>span");

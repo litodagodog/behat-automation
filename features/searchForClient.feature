@@ -18,4 +18,4 @@ Feature: Search for a Client
         Given I am on "/portal/feedback/who_helped_you?bc=1&company=tactics&start=1"
 		And I wait for "5"
 		When I click on text "tactics"
-		Then I should see "Who Helped You?"		
+		Then I should see "Who Helped You?"
