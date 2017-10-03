@@ -1,6 +1,6 @@
 Feature: Search for a Client
     As a website user
-    I need to be able to search for a client
+    I will be able to search for a client
 
     Scenario: Searching for a client
         Given I am on "/"
@@ -13,3 +13,9 @@ Feature: Search for a Client
 		And I wait for "5"
 		When I click on text "tactics"
 		Then I should see "Who Helped You?"
+		
+    Scenario: Select employee
+        Given I am on "/portal/feedback/who_helped_you?bc=1&company=tactics&start=1"
+		And I wait for "5"
+		When I click on text "tactics"
+		Then I should see "Who Helped You?"		
