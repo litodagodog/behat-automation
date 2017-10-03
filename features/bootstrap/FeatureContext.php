@@ -5,11 +5,13 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Mink\Driver\Selenium2Driver;
-use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Gherkin\Node\TableNode;
+use Behat\Behat\Hook\Scope\AfterStepScope;
+
 
 class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
 {
+
 		private $users = array();
 
 		/**
@@ -20,16 +22,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 				$this->users[$row['username']] = $row;
 			}
 		}	
-        /**
-         * @BeforeScenario
-         *
-         * @param BeforeScenarioScope $scope
-         *
-         */
-        public function setUpTestEnvironment($scope)
-        {
-            $this->currentScenario = $scope->getScenario();
-        }	
+	
 	/**
 	   * @Given /^I set browser window size to "([^"]*)" x "([^"]*)"$/
 	   */
@@ -63,6 +56,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     } else {
         $findName->click();
     }
+	sleep(3);
  
     }
 
@@ -79,13 +73,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $findName->click();
     }
  
-    }
-    /**
-     * @When I wait for :arg1
-     */
-    public function iWaitFor($arg1)
-    {
-        sleep($arg1);
     }
 
     /**
@@ -126,9 +113,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         sleep(1);
         $this->saveScreenshot($filename,'screenshots/');
     } */
-  /**
-   * @AfterStep
-   */
+
 	/***  public function takeScreenShotAfterFailedStep(afterStepScope $scope)
 	  {
 		if (99 === $scope->getTestResult()->getResultCode()) {
@@ -159,11 +144,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 			$addNameClient->click();
 		}
     }	  
-        /**
-         * @AfterStep
-         *
-         * @param AfterStepScope $scope
-         */	  
+
 
     /**
      * @When I am authenticated as :arg1
@@ -178,57 +159,67 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 		$this->fillField('username', $username);
 		$this->fillField('password', $this->users[$username]['password']);
 		$this->pressButton('Log In');	
+		sleep(3);
     }
-public function afterStep($scope)
-	{
-		//if test has failed, and is not an api test, get screenshot
-		if(!$scope->getTestResult()->isPassed())
-		{
-			//create filename string
+		/**
+         * @BeforeScenario
+         *
+         * @param BeforeScenarioScope $scope
+         *
+         */
+        public function setUpTestEnvironment($scope)
+        {
+            $this->currentScenario = $scope->getScenario();
+        }
 
-			$featureFolder = preg_replace('/\W/', '', $scope->getFeature()->getTitle());
+        /**
+         * @AfterStep
+         *
+         * @param AfterStepScope $scope
+         */
+        public function afterStep($scope)
+        {
+            //if test has failed, and is not an api test, get screenshot
+            if(!$scope->getTestResult()->isPassed())
+            {
+                //create filename string
 
-			$scenarioName = $this->currentScenario->getTitle();
-			$fileName = preg_replace('/\W/', '', $scenarioName) . '.png';
-			/*
-			$stepF = $scope->getStep()->getText();
-			$fileName = preg_replace('/\W/', '', $stepF) . '.png';
-			*/
+               $featureFolder = preg_replace('/\W/', '', $scope->getFeature()->getTitle());
+                  
+                              $scenarioName = $this->currentScenario->getTitle();
+                              $fileName = preg_replace('/\W/', '', $scenarioName) . '.png';
 
-			//create screenshots directory if it doesn't exist
-			if (!file_exists('report/screenshots_' . $featureFolder)) {
-				mkdir('report/screenshots_' . $featureFolder);
-			}
+                //create screenshots directory if it doesn't exist
+                if (!file_exists('report/screenshots_' . $featureFolder)) {
+                    mkdir('report/screenshots_' . $featureFolder);
+                }
 
-			//take screenshot and save as the previously defined filename
-			//$this->driver->takeScreenshot('report/screenshots' . $featureFolder . '/' . $fileName);
-			// For Selenium2 Driver you can use:
-			file_put_contents('report/screenshots_' . $featureFolder . '/' . $fileName, $this->getSession()->getDriver()->getScreenshot());
+                //take screenshot and save as the previously defined filename
+                //$this->driver->takeScreenshot('report/screenshots_' . $featureFolder . '/' . $fileName);
+                // For Selenium2 Driver you can use:
+                file_put_contents('report/screenshots_' . $featureFolder . '/' . $fileName, $this->getSession()->getDriver()->getScreenshot());
+            }			
+			
+        }	
+
+    /**
+     * @When I see :arg1 button
+     */
+    public function iSeeButton($arg1)
+    {
+        $addPage = $this->getSession()->getPage();
+		$addNameClient = $addPage->find("css", '#'.$arg1);
+		if ($addNameClient) {
+			$addNameClient->click();
+		} else {
 		}
-		//if test has passed, and is not an api test, get screenshot
-		else
-		{
-			//create filename string
+    }
 
-			$featureFolder = preg_replace('/\W/', '', $scope->getFeature()->getTitle());
-			$stepF = $scope->getStep()->getText();
-			  
-			$scenarioName = $this->currentScenario->getTitle();
-			$fileName = preg_replace('/\W/', '', $scenarioName) . '.png';
-			/*
-			$stepF = $scope->getStep()->getText();
-			$fileName = preg_replace('/\W/', '', $stepF) . '.png';
-			*/
-
-			//create screenshots directory if it doesn't exist
-			if (!file_exists('report/screenshots_' . $featureFolder)) {
-				mkdir('report/screenshots_' . $featureFolder);
-			}
-
-			//take screenshot and save as the previously defined filename
-			//$this->driver->takeScreenshot('report/screenshots' . $featureFolder . '/' . $fileName);
-			// For Selenium2 Driver you can use:
-			file_put_contents('report/screenshots_' . $featureFolder . '/' . $fileName, $this->getSession()->getDriver()->getScreenshot());
-		}			
-	}	
+    /**
+     * @When I wait for :arg1 seconds
+     */
+    public function iWaitForSeconds($arg1)
+    {
+        sleep($arg1);
+    }
 }

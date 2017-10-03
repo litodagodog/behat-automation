@@ -10,13 +10,13 @@ Feature: Search for a Client
 
     Scenario: Click the specific client
         Given I am on "/search_results?q=tactics"
-		And I wait for "3"
+		And I wait for "3" seconds
 		When I click on text "tactics"
 		Then I should see "Who Helped You?"
 		
     Scenario: Select employee
         Given I am on "/portal/feedback/who_helped_you?bc=1&company=tactics&start=1"
-		And I wait for "3"
+		And I wait for "3" seconds
 		When I click on text "tactics"
 		Then I should see "Who Helped You?"
 		#Then I should see text matching "You have selected: Grace"
