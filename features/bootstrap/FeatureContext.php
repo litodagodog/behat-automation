@@ -102,18 +102,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 		}
     }
 
-    /**
-     * @Then I save a screenshot to :arg1
-     */
-    /***public function iSaveAScreenshotTo($filename)
-    {
-		if (!is_dir('screenshots')) {
-			mkdir('screenshots', 0777, true);
-		}		
-        sleep(1);
-        $this->saveScreenshot($filename,'screenshots/');
-    } */
-
 	/***  public function takeScreenShotAfterFailedStep(afterStepScope $scope)
 	  {
 		if (99 === $scope->getTestResult()->getResultCode()) {
@@ -198,7 +186,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 //$this->driver->takeScreenshot('report/screenshots_' . $featureFolder . '/' . $fileName);
                 // For Selenium2 Driver you can use:
                 file_put_contents('report/screenshots_' . $featureFolder . '/' . $fileName, $this->getSession()->getDriver()->getScreenshot());
-            }			
+            }
 			
         }	
 
@@ -221,5 +209,57 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 			$addNameClient->click();
 		} else {
 		}
+    }
+    /**
+     * @Then I should see the newly created client :arg1
+     */
+    public function iShouldSeeTheNewlyCreatedClient($arg1)
+    {
+		$td = $this->getSession()->getPage()->find('css',
+			sprintf('table tbody tr td:contains("%s")', $arg1)
+		);
+    }
+
+    /**
+     * @Then I save a screenshot
+     */
+    public function iSaveAScreenshot()
+    {
+		if (!is_dir('screenshots')) {
+			mkdir('screenshots', 0777, true);
+		}		
+        sleep(1);
+		$scenarioName = $this->currentScenario->getTitle();
+        $this->saveScreenshot($scenarioName.'.png','screenshots/');
+    }
+
+    /**
+     * @When I hover over :arg1
+     */
+    public function iHoverOver($arg1)
+    {
+		sleep(3);
+        $session = $this->getSession();
+		$element = $session->getPage()->find('named', array('content', $arg1));
+        if (null === $element) {
+            throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
+        }
+ 
+        $element->mouseOver();		
+    }
+
+    /**
+     * @When I click on :arg1
+     */
+    public function iClickOn($arg1)
+    {
+		sleep(3);
+        $session = $this->getSession();
+		$element = $session->getPage()->find('named', array('content', $arg1));
+        if (null === $element) {
+            throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
+        }
+ 
+        $element->click();		
     }
 }

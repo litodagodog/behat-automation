@@ -80,4 +80,27 @@ Feature: Create Functionality
 		And I accept the term of use	
 		Then I should be on "/master_account"
 		Then I should see text matching "Hi,masterAccount"
-		Then I save a screenshot		
+		Then I save a screenshot
+
+	@createCSRUser
+	Scenario: Create CSR User
+		When I am authenticated as "CSRAccount"
+		And I hover over "Client Management"
+		And I click on "Manage User Accounts"
+		And I click on "Add User"
+		And I fill in "username" with "CSRAccount"
+		And I fill in "email" with "CSRAccount@stage.com"
+		And I fill in "password" with "test123"
+		And I fill in "password_confirm" with "test123"
+		And I select "behatClient001" from "clients_id"
+		And I select "csr" from "memberships"
+		When I press "Save"
+		Then I should not see text matching "The username you"
+		Then I save a screenshot	
+		
+	@loginAsCSRUser
+	Scenario: Login as new CSR User
+		When I am authenticated as "CSRAccount"
+		And I accept the term of use	
+		Then I should be on "/clients/feedback_requests/"
+		Then I save a screenshot			
