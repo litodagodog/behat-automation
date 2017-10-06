@@ -1,3 +1,4 @@
+@loginFunctionality
 Feature: Login Functionality
 	As an admin user/Master User
 	I will be able to login to my account
