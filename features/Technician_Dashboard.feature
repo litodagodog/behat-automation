@@ -1,3 +1,9 @@
+#Pre-conditions
+	#each user onboarding should be done prior in running the script
+### variables that can be modified ####
+	# username/password of each technician
+	# 
+
 @technicianDashboard
 Feature: Technician Dashboard Test Cases
 	As an Technician user for RB or LMA
@@ -83,4 +89,4 @@ Feature: Technician Dashboard Test Cases
 		When I click on "Rewards"
 		Then I should be on "/employees/?tab=rewards"
 		Then I should see text matching "Total Points Available"
-		Then I save
+		Then I save a screenshot
