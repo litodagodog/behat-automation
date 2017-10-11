@@ -56,7 +56,7 @@ Feature: Technician Dashboard Test Cases
 		Then I save a screenshot
 
 	@techLMAUser
-    Scenario: As an LMA-Technician I can Login to yy Account
+    Scenario: As an LMA-Technician I can Login to my Account
 		When I am authenticated as "employee01@lennoxMarktng.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		Then I should be on "/employees/?tab=recent"
