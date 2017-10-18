@@ -37,14 +37,14 @@ Feature: CSR Dashboard Test Cases
 	Background:
 		Given there are following users:
 			| username | password   |
-			| bruceb1@b.com    | test123 |
-			| csremployee@lennoxmrkng.com    | test123 |
+			| CSRForPeterPiper2@PeterPiper2.com    | test123 |
+			| Employee014Quitter@stage.com    | test123 |
         And I am on "/"
 		And I click on login "Client Login"
 		
 	@CSRRBUser
     Scenario: As an CSR I can Login to my account
-		When I am authenticated as "bruceb1@b.com"
+		When I am authenticated as "CSRForPeterPiper2@PeterPiper2.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		Then I should be on "/clients/feedback_requests/"
 		Then I should see "Customer List"
@@ -52,7 +52,7 @@ Feature: CSR Dashboard Test Cases
 		
 	@CSRViewRecentActivity
     Scenario: As an CSR I can View my Recent Activity
-		When I am authenticated as "bruceb1@b.com"
+		When I am authenticated as "CSRForPeterPiper2@PeterPiper2.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Feedback"
 		And I click on "Recent Activity"
@@ -62,7 +62,7 @@ Feature: CSR Dashboard Test Cases
 		
 	@CSRViewReviews
     Scenario: As an CSR I can View My Reviews
-		When I am authenticated as "bruceb1@b.com"
+		When I am authenticated as "CSRForPeterPiper2@PeterPiper2.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Feedback"
 		And I click on "My Reviews"
@@ -72,7 +72,7 @@ Feature: CSR Dashboard Test Cases
 
 	@CSRRBViewSurveys
     Scenario: As an CSR I can View My Surveys
-		When I am authenticated as "bruceb1@b.com"
+		When I am authenticated as "CSRForPeterPiper2@PeterPiper2.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Feedback"
 		And I click on "My Surveys"
@@ -82,7 +82,7 @@ Feature: CSR Dashboard Test Cases
 
 	@CSRRBViewRewards
     Scenario: As an CSR I can View My Rewards
-		When I am authenticated as "bruceb1@b.com"
+		When I am authenticated as "CSRForPeterPiper2@PeterPiper2.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Feedback"
 		And I click on "My Rewards"
@@ -92,21 +92,21 @@ Feature: CSR Dashboard Test Cases
 
 	@CSRRBReplyBuzzboxReview
     Scenario: As an CSR I can Reply to Buzzbox Review
-		When I am authenticated as "bruceb1@b.com"
+		When I am authenticated as "CSRForPeterPiper2@PeterPiper2.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Feedback"
 		And I click on "My Reviews"
 		Then I should be on "/csr_profile/?tab=reviews"
 		When I click on "Reply"
-		And I replied "Review Replied 001" on review
+		And I replied "Review Replied 100" on review
 		And I click on "SAVE"
 		And I wait for 5 seconds
-		Then I should see text matching "Review Replied 001"
+		Then I should see text matching "Review Replied 100"
 		Then I save a screenshot
 		
 	@CSRRBFeedbackRequests
     Scenario: As an CSR I can Send Feedback Request
-		When I am authenticated as "bruceb1@b.com"
+		When I am authenticated as "CSRForPeterPiper2@PeterPiper2.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Manage"
 		And I click on "Feedback Requests"
@@ -116,10 +116,10 @@ Feature: CSR Dashboard Test Cases
 		Then I should see text matching "Enter Customer Data"
 		And I fill in "form_first_name" with "customer002"
 		And I fill in "form_last_name" with "customer002"
-		And I fill in "form_email" with "customer002@customer002.com"
+		And I fill in "form_email" with "customer200@customer002.com"
 		And I click on "Show Calendar"
-		And I select date "October 11, 2017"
-		And I fill in "team_users_names[]" with "employee01"
+		And I select date "October 18, 2017"
+		And I fill in "team_users_names[]" with "CSRForPeterPiper2"
 		And I click on "Continue"
 		Then I should be on "clients/feedback_requests?type=pending&success=request_added"
 		Then I should see "Send Meet the team Email" button
@@ -127,7 +127,7 @@ Feature: CSR Dashboard Test Cases
 
 	@CSRRBReviewRequests
     Scenario: As an CSR I can Send Review Requests
-		When I am authenticated as "bruceb1@b.com"
+		When I am authenticated as "CSRForPeterPiper2@PeterPiper2.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Manage"
 		And I click on "Review Requests"
@@ -136,14 +136,14 @@ Feature: CSR Dashboard Test Cases
 		And I fill in "emails" with "customer001,customer002"
 		When I click on "Send"
 		Then I should see text matching "Incorrectly formatted email"
-		And I fill in "emails" with "customer001@customer001.com,customer002@customer002.com"
+		And I fill in "emails" with "customer100@customer001.com,customer200@customer002.com"
 		When I click on "Send"
 		Then I should see text matching "Feedback Requested"
 		Then I save a screenshot			
 
 	@LMARBUser
     Scenario: As an CSR-LMA I can Login to my Account
-		When I am authenticated as "csremployee@lennoxmrkng.com"
+		When I am authenticated as "Employee014Quitter@stage.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		Then I should be on "/clients/feedback_requests/"
 		Then I should see "Customer List"
@@ -151,7 +151,7 @@ Feature: CSR Dashboard Test Cases
 		
 	@LMAViewRecentActivity
     Scenario: As an CSR-LMA I can View my Recent Activity
-		When I am authenticated as "csremployee@lennoxmrkng.com"
+		When I am authenticated as "Employee014Quitter@stage.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Feedback"
 		And I click on "Recent Activity"
@@ -161,7 +161,7 @@ Feature: CSR Dashboard Test Cases
 		
 	@LMAViewReviews
     Scenario: As an CSR-LMA I can View my Reviews
-		When I am authenticated as "csremployee@lennoxmrkng.com"
+		When I am authenticated as "Employee014Quitter@stage.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Feedback"
 		And I click on "My Reviews"
@@ -171,7 +171,7 @@ Feature: CSR Dashboard Test Cases
 
 	@LMARBViewSurveys
     Scenario: As an CSR-LMA I can View my Surveys
-		When I am authenticated as "csremployee@lennoxmrkng.com"
+		When I am authenticated as "Employee014Quitter@stage.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Feedback"
 		And I click on "My Surveys"
@@ -181,7 +181,7 @@ Feature: CSR Dashboard Test Cases
 
 	@LMARBViewRewards
     Scenario: As an CSR-LMA I can View my Rewards
-		When I am authenticated as "csremployee@lennoxmrkng.com"
+		When I am authenticated as "Employee014Quitter@stage.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Feedback"
 		And I click on "My Rewards"
@@ -191,21 +191,21 @@ Feature: CSR Dashboard Test Cases
 
 	@LMARBReplyBuzzboxReview
     Scenario: As an CSR-LMA I can Reply to Buzzbox Review
-		When I am authenticated as "csremployee@lennoxmrkng.com"
+		When I am authenticated as "Employee014Quitter@stage.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Feedback"
 		And I click on "My Reviews"
 		Then I should be on "/csr_profile/?tab=reviews"
 		When I click on "Reply"
-		And I replied "Review Replied 004" on review
+		And I replied "Review Replied 100" on review
 		And I click on "SAVE"
 		And I wait for 5 seconds
-		Then I should see text matching "Review Replied 004"
+		Then I should see text matching "Review Replied 100"
 		Then I save a screenshot
 		
 	@LMARBFeedbackRequests
     Scenario: As an CSR-LMA I can Send Feedback Request
-		When I am authenticated as "csremployee@lennoxmrkng.com"
+		When I am authenticated as "Employee014Quitter@stage.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Manage"
 		And I click on "Feedback Requests"
@@ -215,10 +215,10 @@ Feature: CSR Dashboard Test Cases
 		Then I should see text matching "Enter Customer Data"
 		And I fill in "form_first_name" with "customer002"
 		And I fill in "form_last_name" with "customer002"
-		And I fill in "form_email" with "customer002@customer002.com"
+		And I fill in "form_email" with "customer200@customer002.com"
 		And I click on "Show Calendar"
-		And I select date "October 11, 2017"
-		And I fill in "team_users_names[]" with "csremployee"
+		And I select date "October 18, 2017"
+		And I fill in "team_users_names[]" with "Employee014Quitter"
 		And I click on "Continue"
 		Then I should be on "clients/feedback_requests?type=pending&success=request_added"
 		Then I should see "Send Meet the team Email" button
@@ -226,7 +226,7 @@ Feature: CSR Dashboard Test Cases
 
 	@LMARBReviewRequests
     Scenario: As an CSR-LMA I can Send Review Requests
-		When I am authenticated as "csremployee@lennoxmrkng.com"
+		When I am authenticated as "Employee014Quitter@stage.com"
 		Then I should not see text matching "Enter Username or Email and valid password"
 		When I hover on "Manage"
 		And I click on "Review Requests"
@@ -235,7 +235,7 @@ Feature: CSR Dashboard Test Cases
 		And I fill in "emails" with "customer001,customer002"
 		When I click on "Send"
 		Then I should see text matching "Incorrectly formatted email"
-		And I fill in "emails" with "customer001@customer001.com,customer002@customer002.com"
+		And I fill in "emails" with "customer100@customer001.com,customer200@customer002.com"
 		When I click on "Send"
 		Then I should see text matching "Feedback Requested"
 		Then I save a screenshot
