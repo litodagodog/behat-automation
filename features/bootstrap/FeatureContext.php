@@ -250,7 +250,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
          
                 $element->click();
                 break;
-            case 'And New member':
+            case 'Add New member':
                 $element = $session->getPage()->find("css", "#client_manager_db_settings_team_members_instance_1_member");
                 if (null === $element) 
                 {
@@ -477,21 +477,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     }
 
     /**
-     * @When I replied :arg1 on review
-     */
-    public function iRepliedOnReview($arg1)
-    {
-        sleep(2);
-        $session = $this->getSession();
-        $element = $session->getPage()->find("css", ".reply-text-textarea");
-        if ($element) 
-        {
-            $element->setValue($arg1);
-        }
-   
-    }
-
-    /**
      * @When I click Alert Confirmation
      */
     public function iClickAlertConfirmation()
@@ -632,70 +617,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function iPickAsFeaturedReview($arg1)
     {       
         $session = $this->getSession();
-        $CheckReviewToFeatured = $session->getPage()->find('css',
-        sprintf('td.center.featured_review_column>input[type="checkbox"]>td.center>div:contains("%s")', $arg1));  
-        $CheckReviewToFeatured->click();
-        /***$ray_state = array_filter($CheckReviewToFeatured);
-        if (empty($ray_state))
-        {
-            throw new \InvalidArgumentException(sprintf('Review list is empty!'));  
-        }
-        else
-        {
-            foreach($CheckReviewToFeatured as $toCheck)  
-            {
-                $subArg1 = substr($toCheck->getAttribute('type'), 0, 6);
-                if($subArg1 === 'checkbox')
-                {
-                    echo $subArg1;
-                    $ReviewToFeatured = $session->getPage()->find('css',
-                        sprintf('td:nth-child(3) > div:contains("%s")', $arg1));
-                    if(preg_match('/'. $arg1 .'/', $ReviewToFeatured->getText()))
-                    {
-                        $toCheck->click();
-                    }
-                }
-
-            }      
-        }   
-        /***$elementsAll = $session->getPage()->findAll('css',
-            sprintf('#service_areas_table > tbody'));
-        $ray_state = array_filter($elementsAll);
-        if (empty($ray_state))
-        {
-            throw new \InvalidArgumentException(sprintf('Review list is empty!'));  
-        }
-        else
-        {
-            foreach($elementsAll as $element)
-            {
-                //echo $element->getText();
-                if(preg_match('/'. $arg1 .'/', $element->getText()))
-                {
-                    $ReviewToFeatured = $session->getPage()->find('css',
-                        sprintf('td:nth-child(3) > div:contains("%s")', $arg1));
-                    if(preg_match('/'. $arg1 .'/', $ReviewToFeatured->getText()))
-                    {
-                        $ReviewToFeatured->getAttribute('class');
-                        $CheckReviewToFeatured = $session->getPage()->findAll('xpath',
-                        sprintf('//table/tbody/tr/td/input'));   
-                        foreach($CheckReviewToFeatured as $toCheck)  
-                        {
-                            echo $toCheck->getAttribute('type');
-                        }
-                        //$CheckReviewToFeatured->click();                   
-                    }
-                    break;
-                }
-                else
-                {
-                    throw new \InvalidArgumentException(sprintf('Cannot select featured review!'));
-                    break;
-                }
-
-            }            
-        }     **/  
-        /***$session = $this->getSession();
         $elementsAll = $session->getPage()->findAll('css',
             sprintf('#service_areas_table > tbody'));
         $ray_state = array_filter($elementsAll);
@@ -705,30 +626,22 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         }
         else
         {
-            foreach($elementsAll as $element)
-            {
-
-                echo $element->getText();
-                $CheckFeatured = $session->getPage()->find('css',
-                    sprintf('#service_areas_table > tbody[type="checkbox"]'));
-                if(preg_match('/'. $arg1 .'/', $element->getText()))
+            foreach($elementsAll as $element) {                 
+                $CheckCustomerName = $session->getPage()->find('css',sprintf('tr:contains("%s")',$arg1)); 
+                if(preg_match('/'. $arg1 .'/', $CheckCustomerName->getText()))
                 {
-                    $radioButton = $page->find('css', '#'.$label->getAttribute('for'));
-                    $radioButton->click();
-                    $CheckFeatured = $session->getPage()->find('css',
-                        sprintf('td.center.featured_review_column>input[type="checkbox"]'));
-                    $CheckFeatured->click();
+                    $clickLink = $CheckCustomerName->find('css','td input[type="checkbox"]');
+                    $clickLink->click();
                     break;
-
                 }
                 else
-                {                  
+                {
                     throw new \InvalidArgumentException(sprintf('Cannot select featured review!'));
                     break;
-                } 
+                }
 
             }            
-        } ***/
+        } 
     }
 
     /**
@@ -766,55 +679,30 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function iRepliedOnAnyBuzzboxReview($arg1)
     {
         $session = $this->getSession();
-        /***$elementsAll = $session->getPage()->findAll('css',
-            sprintf('#service_areas_table > tbody > tr > td > div:contains("Reply")'));  
-        foreach($elementsAll as $element) {
-            //if(preg_match('/Reply/', $element->getText())) {
-            if(stripos($element->getText(), "Reply") !== false) {                        
-                $element->click();
-                $session->executeScript('window.scrollTo(0,500);');
-                $elementTextArea = $session->getPage()->findAll('css', 'textarea');
-                foreach($elementTextArea as $elementCheck) {
-                    var_dump($elementCheck->getText());
-                    //var_dump($elementCheck->getAttribute('class'));
-                    //var_dump($elementCheck->getText());
-                    if($elementCheck->getText() !== $arg1){
-                        $elementCheck->setValue($arg1);
-                        break;
-                    }
-                    //echo $elementCheck->getText();
-                }
-                //$elementTextArea->setValue($arg1);
-                //$addReplies = $session->evaluateScript("jQuery('textarea').val('$arg1');");
-                //$CheckValue = $session->evaluateScript("jQuery('textarea')[0].value;");
-                //var_dump($addReply);
-                //echo $addReply[0]["ELEMENT"];
-                //$session->evaluateScript("jQuery('span.save-button').click();");
-                #review_row633737 > td:nth-child(5) > div.reply > div.reply-buttons > span.save-button
-                //$postReply = $session->getPage()->find('css', 'td:nth-child(5) > div.reply.active > div.reply-buttons > span.save-button > a');
-                //$postReply->click();
-                break;                     
-            }
-        } ***/
         $elements = $session->getPage()->findAll('css',
-            sprintf('#service_areas_table > tbody > tr > td > div:contains("Reply")'));  
-        //$element->click();
-        //$session->executeScript('window.scrollTo(0,500);');
-        //$addReply = $session->executeScript("jQuery('textarea').val('$arg1');");
+            sprintf('#service_areas_table > tbody tr'));  
+        $session->executeScript('window.scrollTo(0,500);');   
         foreach($elements as $element){
-            if(preg_match('/Reply/', $element->getText())) {                
-                $element->click();
-                $elementTextArea = $session->getPage()->findAll('css', 'textarea');
-                foreach($elementTextArea as $textareaCheck){
-                    echo $textareaCheck->getText();
-                    if($textareaCheck->getText() !== $arg1){
-                        //$textareaCheck->setValue($arg1);
-                        break;
-                    }
+            $checkReply = $element->find('css','.reply-button');
+            if ($checkReply != NULL) {
+            //echo $checkReply->getAttribute('class');
+                if ($checkReply->getAttribute('class') === 'reply-button general-reply-button '){
+                    $checkReply->click();
+                    $textArea = $element->find('css','textarea');
+                    $textArea->setValue($arg1);
+                    $clickSave = $element->find('css', 'div a:contains("SAVE")');
+                    $clickSave->click();
+                    break;
                 }
-                
+                elseif ($checkReply->getAttribute('class') === 'reply-button lennox-reply-button '){
+                    $checkReply->click();
+                    $textArea = $element->find('css','textarea');
+                    $textArea->setValue($arg1);
+                    $clickSave = $element->find('css', 'div a:contains("SAVE")');
+                    $clickSave->click();
+                    break;
+                }                
             }
         }
-        //$session->executeScript("jQuery('span.save-button')[0].click();");   
     }
 }

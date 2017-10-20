@@ -97,11 +97,9 @@ Feature: CSR Dashboard Test Cases
 		When I hover on "Feedback"
 		And I click on "My Reviews"
 		Then I should be on "/csr_profile/?tab=reviews"
-		When I click on "Reply"
-		And I replied "Review Replied 100" on review
-		And I click on "SAVE"
+		And I replied "Review Replied 302" on any buzzbox review
 		And I wait for 5 seconds
-		Then I should see text matching "Review Replied 100"
+		Then I should see text matching "Review Replied 302"
 		Then I save a screenshot
 		
 	@CSRRBFeedbackRequests
@@ -196,11 +194,9 @@ Feature: CSR Dashboard Test Cases
 		When I hover on "Feedback"
 		And I click on "My Reviews"
 		Then I should be on "/csr_profile/?tab=reviews"
-		When I click on "Reply"
-		And I replied "Review Replied 100" on review
-		And I click on "SAVE"
+		And I replied "Review Replied 302" on any buzzbox review
 		And I wait for 5 seconds
-		Then I should see text matching "Review Replied 100"
+		Then I should see text matching "Review Replied 302"
 		Then I save a screenshot
 		
 	@LMARBFeedbackRequests
