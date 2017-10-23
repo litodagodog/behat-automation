@@ -1,5 +1,6 @@
 ## Client use "PeterPiperPlumbingII" ###
 ## "Enable Review Request" should be enabled on client ##
+## "BragBook" should be enabled on client ##
 ### scenario to be modified ###
 ## @ClientMngrCreateTechnician
 ## @ClientMngrDeactivateTechnician
@@ -150,10 +151,10 @@ Feature: Client Manager Dashboard for RB
 		When I press "Feature a Review"
 		### use firstname of reviewer"
 		And I wait for 5 seconds
-		And I pick "customer02" as featured review
+		And I pick "test02" as featured review
 		And I press "featured_review_confirm"
 		And I wait for 5 seconds
-		Then I should see text matching "Featured review customer02"
+		Then I should see text matching "Featured review test02"
 		Then I save a screenshot	
 
 	@ClientMngrDownloadBragbook
@@ -203,7 +204,7 @@ Feature: Client Manager Dashboard for RB
 		When I am authenticated as "clientManager@PeterPiper2.com"
 		When I hover on "Feedback"
 		And I click on "View Surveys"
-		Then I should see text matching "Customer"
+		Then I should see text matching "Surveys"
 		Then I save a screenshot
 
 	@ClientMngrSearchSurveysByDate
@@ -215,7 +216,7 @@ Feature: Client Manager Dashboard for RB
 		And I select "1" from "start_date-dd"
 		And I select "2010" from "start_date"
 		When I press "Search"
-		Then I should see text matching "Customer"
+		Then I should see text matching "Surveys"
 		Then I save a screenshot
 
 	@ClientMngrSearchSurveysByEmployee
@@ -246,14 +247,14 @@ Feature: Client Manager Dashboard for RB
 		And I click on "Review Requests"
 		Then I should be on "/clients/review_requests"
 		Then I should see text matching "Request Reviews"
-		And I fill in "emails" with "customer011,customer021"
+		And I fill in "emails" with "customer113,customer213"
 		When I click on "Send"
 		Then I should see text matching "Incorrectly formatted email"
-		And I fill in "emails" with "customer011@customer011.com,customer021@customer021.com"
+		And I fill in "emails" with "customer113@customer113.com,customer213@customer213.com"
 		When I click on "Send"
 		Then I should see text matching "Feedback Requested"
 		Then I save a screenshot
-
+		
 	@ClientMngrSendReviewRequestsFromFeedback
     Scenario: As Client Manager I can Send Review Request from Feedback
 		When I am authenticated as "clientManager@PeterPiper2.com"
@@ -261,5 +262,21 @@ Feature: Client Manager Dashboard for RB
 		And I click on "Feedback Requests"
 		Then I should be on "/clients/feedback_requests"
 		Then I should see text matching "Appointment and Feedback"
-		Then I should see "Send Review Request" button
-		Then I save a screenshot														
+		Then I should see text matching "Search for customer"
+		When I click on "+ Add"
+		Then I should see text matching "Enter Customer Data"
+		And I fill in "form_first_name" with "customer100"
+		And I fill in "form_last_name" with "customer100"
+		And I fill in "form_email" with "customer100@customer100.com"
+		And I click on "Show Calendar"
+		And I select date "October 23, 2017"
+		And I fill in "team_users_names[]" with "Justin"
+		And I click on "Continue"
+		Then I should be on "clients/feedback_requests?type=pending&success=request_added"
+		When I click on "Send Meet the team Email" button for customer "customer100"
+		And I click on "Send E-mail"
+		And I click on "Job Completed" button for customer "customer100"
+		And I click on "Send Feedback Request" button for customer "customer100"
+		When I click on "Sent Requests"
+		Then I should see text matching "Feedback Requested"
+		Then I save a screenshot											

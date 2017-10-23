@@ -249,6 +249,8 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 }
          
                 $element->click();
+                sleep(2);
+                $session->executeScript('window.scrollTo(0,500);');
                 break;
             case 'Add New member':
                 $element = $session->getPage()->find("css", "#client_manager_db_settings_team_members_instance_1_member");
@@ -529,13 +531,15 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         sleep(2);
         $session = $this->getSession();
+        $elementLennox = $session->getPage()->find('named', array('id', 'techs'));
         $element = $session->getPage()->find("css", "#tech_form>div:nth-child(4)>button>span");
-        if (null === $element) 
-        {
-            throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
+        if (null === $element) {           
+            $elementLennox->click();
         }
- 
-        $element->click();
+        else{
+            $element->click();
+        }
+        
     }
 
 
@@ -705,4 +709,113 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             }
         }
     }
+
+    /**
+     * @When I click on :arg1 button for customer :arg2
+     */
+    public function iClickOnButtonForCustomer($arg1, $arg2)
+    {
+        sleep(2);
+        $session = $this->getSession();
+        $elementsAll = $session->getPage()->findAll('css',
+            sprintf('#surveys_table > tbody'));
+        $ray_state = array_filter($elementsAll);
+        if($arg1 === 'Send Meet the team Email'){            
+            if (empty($ray_state))
+            {
+                throw new \InvalidArgumentException(sprintf('Survey list is empty!'));  
+            }
+            else
+            {
+                foreach($elementsAll as $element) {                 
+                    $CheckCustomerName = $element->find('css',sprintf('tr:contains("%s")',$arg2)); 
+                    //echo $CheckCustomerName->getText();
+                    if(preg_match('/'. $arg2 .'/', $CheckCustomerName->getText()))
+                    {
+                        $session->executeScript('window.scrollTo(0,500);');
+                        $clickMTT = $CheckCustomerName->find('css','#request_buttons > li');
+                        //echo $clickMTT->getAttribute('class');
+                        if($clickMTT === null){
+                            throw new Exception('Job Completed is not available!');
+                        }         
+                        else{
+                            $clickMTT->click();
+                        }               
+                        break;   
+                    }
+                    else
+                    {
+                        throw new \InvalidArgumentException(sprintf('Cannot select survey!'));
+                        break;
+                    }
+
+                }            
+            }
+        }
+        elseif($arg1 === 'Job Completed') {
+            if (empty($ray_state))
+            {
+                throw new \InvalidArgumentException(sprintf('Survey list is empty!'));  
+            }
+            else
+            {
+                foreach($elementsAll as $element) {                 
+                    $CheckCustomerName = $element->find('css',sprintf('tr:contains("%s")',$arg2)); 
+                    //echo $CheckCustomerName->getText();
+                    if(preg_match('/'. $arg2 .'/', $CheckCustomerName->getText()))
+                    {
+                        $session->executeScript('window.scrollTo(0,500);');
+                        $clickJobCompleted = $CheckCustomerName->find('css','td.buttons-block > input');
+                        //$result = var_dump($clickJobCompleted);
+                        if($clickJobCompleted === null){
+                            throw new Exception('Job Completed is not available!');
+                        }
+                        else{
+                            $clickJobCompleted->click();
+                        }                         
+                        break;
+                    }
+                    else
+                    {
+                        throw new \InvalidArgumentException(sprintf('Cannot select survey!'));
+                        break;
+                    }
+
+                }            
+            }            
+        }
+        else{
+            if (empty($ray_state))
+            {
+                throw new \InvalidArgumentException(sprintf('Survey list is empty!'));  
+            }
+            else
+            {
+                foreach($elementsAll as $element) {                 
+                    $CheckCustomerName = $element->find('css',sprintf('tr:contains("%s")',$arg2)); 
+                    //echo $CheckCustomerName->getText();
+                    if(preg_match('/'. $arg2 .'/', $CheckCustomerName->getText()))
+                    {
+                        $session->executeScript('window.scrollTo(0,500);');
+                        $clickJobCompleted = $CheckCustomerName->find('css','#request_buttons > li');
+                        //$result = var_dump($clickJobCompleted);
+                        if($clickJobCompleted === null){
+                            throw new Exception('Send Feedback Request is not available!');
+                        }
+                        else{
+                            $clickJobCompleted->click();
+                        }                         
+                        break;                        
+                    }
+                    else
+                    {
+                        throw new \InvalidArgumentException(sprintf('Cannot select survey!'));
+                        break;
+                    }
+
+                }            
+            }            
+        }        
+    }
+
 }

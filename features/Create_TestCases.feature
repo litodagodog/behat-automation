@@ -30,13 +30,13 @@ Feature: Create Test Cases
         And I am on "/"
 		And I click on login "Client Login"
 	
-	@createClient
-    Scenario: Create New Client
+	@createClientBuzzboxReviewOnly
+    Scenario: Create New Client BuzzBox Only
 		When I am authenticated as "adminUser"
 		And I press on "Add Client" button
-		And I fill in "company" with "Sprint7NewClient"
+		And I fill in "company" with "Sprint7NewClientBuzzBox"
 		And I check "options[send_as_feature]"
-		And I fill in "contact_email" with "Sprint7NewClient@stage.com"
+		And I fill in "contact_email" with "Sprint7NewClientBuzzBox@stage.com"
 		#And I check "buzzbox-title-on-client-dashboard"
 		#And I check "buzzbox-title-on-portal"
 		#And I check "buzzbox-title-on-public-pages"
@@ -44,6 +44,21 @@ Feature: Create Test Cases
 		When I press "submit_client_form"
 		Then I should not see "Error: company with such name already exists in the database"
 		Then I save a screenshot
+
+	@createClientSingleSiteOnly
+    Scenario: Create New Client SingleSite
+		When I am authenticated as "adminUser"
+		And I press on "Add Client" button
+		And I fill in "company" with "Sprint7NewClientSingeSite"
+		And I check "options[send_as_feature]"
+		And I fill in "contact_email" with "Sprint7NewClientSingeSite@stage.com"
+		#And I check "buzzbox-title-on-client-dashboard"
+		#And I check "buzzbox-title-on-portal"
+		#And I check "buzzbox-title-on-public-pages"
+		And I check "buzzbox-review-only"
+		When I press "submit_client_form"
+		Then I should not see "Error: company with such name already exists in the database"
+		Then I save a screenshot		
 	
 	@searchClient
 	Scenario: Search for the newly created Client
@@ -147,4 +162,4 @@ Feature: Create Test Cases
 		And I fill in "keywords" with "sprint7tech"
 		When I press "Search"
 		Then I should see the newly created user "sprint7tech"
-		Then I save a screenshot		
+		Then I save a screenshot
