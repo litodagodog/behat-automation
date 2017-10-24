@@ -100,7 +100,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 
     /**
      * @When I click on logout :arg1
-     */
+
     public function iClickOnLogout($arg1)
     {
         $session = $this->getSession();
@@ -113,7 +113,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         {
 			$element->click();
 		}
-    }
+    }*/
 
     /**
      * @When I press on :arg1 button
@@ -288,7 +288,34 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 }
 
                 $element->click(); 
-                break;                             
+                break;  
+            case 'Search':
+                $element = $session->getPage()->find("css", "#content > form > input.round.button");
+                if (null === $element) 
+                {
+                    throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
+                }
+
+                $element->click(); 
+                break;
+            case 'Save':
+                $element = $session->getPage()->find("css", "#submit_client_form");
+                if (null === $element) 
+                {
+                    throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
+                }
+
+                $element->click(); 
+                break;
+            case 'Logout':
+                $element = $session->getPage()->find("css", "#admin-topmenu > a:nth-child(2) > li");
+                if (null === $element) 
+                {
+                    throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
+                }
+
+                $element->click(); 
+                break;                                                                              
             default:
                 $element = $session->getPage()->find('named', array('link', $arg1));
                 if (null === $element) 
@@ -320,9 +347,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 		{
 			$element = $session->getPage()->find('named', array('content', $arg1));
 			$element->click();
-		/*if (null === $element) {
-			throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
-		} */
 		}
 		catch(\WebDriver\Exception\ElementNotVisible $f)
 		{
@@ -332,8 +356,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 				$checkElem->click();
 				sleep(3);
 				$elementNext = $session->getPage()->find('named', array('content', $arg1));
-				//$elementNext = $session()->getPage()->find('xpath', '//label[text()=' . $arg1 . ']');
-				//$elementNext = $session->getPage()->findLink($arg1);
 				if($elementNext)
 				{
 					$elementNext->click();
@@ -342,33 +364,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 					echo "element not found!";
 				}
 			}
-		}
-		/***if(null === $element)
-		{
-			$checkElem = $session->getPage()->find("css", '#peoples>div.next_arrow1>a>img');		
-			if ($checkElem)
-			{
-				$checkElem->click();
-				sleep(3);
-				$elementNext = $session->getPage()->find('named', array('content', $arg1));
-				//$elementNext = $session()->getPage()->find('xpath', '//label[text()=' . $arg1 . ']');
-				//$elementNext = $session->getPage()->findLink($arg1);
-				var_dump($elementNext);
-				if($elementNext)
-				{
-					$elementNext->click();
-				}
-				else{
-					echo "element not found!";
-				}
-			}			
-
-		}
-		else
-		{
-			$element->click();
-		} **/
-			
+		}			
     }
 
     /**
@@ -818,4 +814,106 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         }        
     }
 
+    /**
+     * @Then I should only see Single Sites Reviews on public pages
+     */
+    public function iShouldOnlySeeSingleSitesReviewsOnPublicPages()
+    {
+        sleep(2);
+        $session = $this->getSession();
+        $session->executeScript('window.scrollTo(0,500);');        
+        $findRB = $session->getPage()->findLink('ReviewBuzz');
+        if($findRB === null){
+            $findRBLogoOnWidget = $session->getPage()->find('css','body > div.widget.default > div > div.company_reviews_block > div.company_reviews > div.social_sites > a > img');
+            if($findRBLogoOnWidget === null){
+                print_r('Only Single Site are displayed in Public Page!'); 
+            }
+            else{
+                print_r('All Reviews are displayed in Public Page!');  
+            }
+            
+        }
+        else{              
+            if(preg_match('/buzz/', $findRB->getAttribute('href'))) {    
+            print_r('All Reviews are displayed in Public Page!');                      
+            }
+        }
+    }
+
+    /**
+     * @Then I should only All Single Sites Reviews on public pages
+     */
+    public function iShouldOnlyAllSingleSitesReviewsOnPublicPages()
+    {
+        sleep(2);
+        $session = $this->getSession();
+        $session->executeScript('window.scrollTo(0,500);');        
+        $findRB = $session->getPage()->findLink('ReviewBuzz');
+        if($findRB === null){
+            $findRBLogoOnWidget = $session->getPage()->find('css','body > div.widget.default > div > div.company_reviews_block > div.company_reviews > div.social_sites > a > img');
+            if($findRBLogoOnWidget === null){
+                pass;
+            }
+            else{
+                print_r('All Reviews are displayed in Public Page!');  
+            }
+            
+        }
+        else{              
+            if(preg_match('/buzz/', $findRB->getAttribute('href'))) {    
+            print_r('All Reviews are displayed in Public Page!');                      
+            }
+        }
+    }
+
+    /**
+     * @Then I should have total reviews
+     */
+    public function iShouldHaveTotalReviews()
+    {
+        sleep(2);
+        $cntReview = array();
+        $session = $this->getSession();
+        $findReviewCnts = $session->getPage()->findAll('css','div[class="reviews_count"]');
+        foreach($findReviewCnts as $reviewTotal){
+            //preg_match_all('!\d+!', $reviewTotal->getText(), $matches);
+            //print_r(array_sum($matches));
+            $int = filter_var($reviewTotal->getText(), FILTER_SANITIZE_NUMBER_INT);
+            array_push($cntReview, $int);
+        }
+        print_r(array_sum($cntReview));
+    }
+
+    /**
+     * @Then I should see :arg1 skin
+     */
+    public function iShouldSeeSkin($arg1)
+    {
+        sleep(2);
+        $session = $this->getSession();
+        $elementLennox = $session->getPage()->find('css','body > div.lennox-header > div.lennox-middle-line > div > div.lennox-logo.clearfix > a > img');
+        if ($elementLennox !== null) {           
+            print_r('Lennox Branding is Enabled!');
+        }
+        else{
+            //print_r('Lennox Branding is Disabled!');
+            $checkemailPreviewLNX = $session->getPage()->find('css','#email_preview > div > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > img');
+            if ($checkemailPreviewLNX !== null) {           
+                print_r('Lennox Branding is Enabled!');
+            }
+        }
+    }
+
+    /**
+     * @Then I should not see :arg1 skin
+     */
+    public function iShouldNotSeeSkin($arg1)
+    {
+        sleep(2);
+        $session = $this->getSession();
+        $checkemailPreviewLNX = $session->getPage()->find('css','#email_preview > div > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > img');
+        if ($checkemailPreviewLNX === null) {           
+            print_r('Lennox Branding is Disabled!');
+        }
+    }
 }

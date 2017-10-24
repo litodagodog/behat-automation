@@ -17,7 +17,7 @@ Feature: Technician Dashboard Test Cases
 			| username | password   |
 			| TechForTactics@tactics.com    | test123 |
 			| Employee015Quitter@stage.com    | test123 |
-        		And I am on "/"
+        And I am on "/"
 		And I click on login "Client Login"
 		
 	@techRBUser
