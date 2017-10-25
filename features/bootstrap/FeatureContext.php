@@ -159,7 +159,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                $scenarioName = $this->currentScenario->getTitle();
                $step = $event->getStep();
                $stepText = $scenarioName . '_' . $step->getText();
-               //$stepText = $event->getStep()->getText();
                $fileName = 'Fail.'.preg_replace('#[^a-zA-Z0-9\._-]#', '',$stepText).'.png';
                $filePath = 'report/failed_screenshots';
                if(!is_dir($filePath)){
@@ -315,7 +314,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 }
 
                 $element->click(); 
-                break;                                                                              
+                break;                                                                                            
             default:
                 $element = $session->getPage()->find('named', array('link', $arg1));
                 if (null === $element) 
@@ -493,8 +492,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $elementsAll = $session->getPage()->findAll('css','#wizard_employees_table>tbody');        
         foreach($elementsAll as $element)
         {
-            //echo $element->getText();
-            //$element->getAttribute('title')
             $subArg1 = substr($arg1, 0, 11);
             $checkUser = preg_match('/'. $subArg1 .'/', $element->getText());
             if($checkUser)
@@ -578,8 +575,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function iDeleteReviewFromList($arg1)
     {
         $session = $this->getSession();
-        #service_areas_table > tbody    --> loop through all tbody of review list
-        #td:nth-child(3) > div --> only get the first review in list
         $elementsAll = $session->getPage()->findAll('css',
             sprintf('#service_areas_table > tbody'));
         $ray_state = array_filter($elementsAll);
@@ -591,7 +586,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         {
             foreach($elementsAll as $element)
             {
-                //echo $element->getText();
                 if(preg_match('/'. $arg1 .'/', $element->getText()))
                 {
                     $deleteLink = $session->getPage()->find('css',
@@ -841,9 +835,57 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     }
 
     /**
-     * @Then I should only All Single Sites Reviews on public pages
+     * @Then I should have total reviews
      */
-    public function iShouldOnlyAllSingleSitesReviewsOnPublicPages()
+    public function iShouldHaveTotalReviews()
+    {
+        sleep(2);
+        $cntReview = array();
+        $session = $this->getSession();
+        $findReviewCnts = $session->getPage()->findAll('css','div[class="reviews_count"]');
+        foreach($findReviewCnts as $reviewTotal){
+            $int = filter_var($reviewTotal->getText(), FILTER_SANITIZE_NUMBER_INT);
+            array_push($cntReview, $int);
+        }
+        print_r(array_sum($cntReview));
+    }
+
+    /**
+     * @Then I should see :arg1 skin
+     */
+    public function iShouldSeeSkin($arg1)
+    {
+        sleep(2);
+        $session = $this->getSession();
+        $elementLennox = $session->getPage()->find('css','body > div.lennox-header > div.lennox-middle-line > div > div.lennox-logo.clearfix > a > img');
+        if ($elementLennox !== null) {           
+            print_r('Lennox Branding is Enabled!');
+        }
+        else{
+            $checkemailPreviewLNX = $session->getPage()->find('css','#email_preview > div > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > img');
+            if ($checkemailPreviewLNX !== null) {           
+                print_r('Lennox Branding is Enabled!');
+            }
+        }
+    }
+
+    /**
+     * @Then I should not see :arg1 skin
+     */
+    public function iShouldNotSeeSkin($arg1)
+    {
+        sleep(2);
+        $session = $this->getSession();
+        $checkemailPreviewLNX = $session->getPage()->find('css','#email_preview > div > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > img');
+        if ($checkemailPreviewLNX !== null) {           
+            print_r('Lennox Branding is Disabled!');
+        }
+    }
+
+    /**
+     * @Then I should see All Reviews on public pages
+     */
+    public function iShouldSeeAllReviewsOnPublicPages()
     {
         sleep(2);
         $session = $this->getSession();
@@ -867,53 +909,107 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     }
 
     /**
-     * @Then I should have total reviews
+     * @Then I should see Review title on review
      */
-    public function iShouldHaveTotalReviews()
+    public function iShouldSeeReviewTitleOnReview()
     {
         sleep(2);
-        $cntReview = array();
         $session = $this->getSession();
-        $findReviewCnts = $session->getPage()->findAll('css','div[class="reviews_count"]');
-        foreach($findReviewCnts as $reviewTotal){
-            //preg_match_all('!\d+!', $reviewTotal->getText(), $matches);
-            //print_r(array_sum($matches));
-            $int = filter_var($reviewTotal->getText(), FILTER_SANITIZE_NUMBER_INT);
-            array_push($cntReview, $int);
+        $checkemailPreviewLNX = $session->getPage()->find('css','div.reviewbuzz-widget-review-summary-title');
+        if ($checkemailPreviewLNX !== null) {           
+            print_r('Review Title is displayed!');
         }
-        print_r(array_sum($cntReview));
     }
 
     /**
-     * @Then I should see :arg1 skin
+     * @Then I should NOT see Review title on review
      */
-    public function iShouldSeeSkin($arg1)
+    public function iShouldNotSeeReviewTitleOnReview()
     {
         sleep(2);
         $session = $this->getSession();
-        $elementLennox = $session->getPage()->find('css','body > div.lennox-header > div.lennox-middle-line > div > div.lennox-logo.clearfix > a > img');
-        if ($elementLennox !== null) {           
-            print_r('Lennox Branding is Enabled!');
+        $checkemailPreviewLNX = $session->getPage()->find('css','div.reviewbuzz-widget-review-summary-title');
+        if ($checkemailPreviewLNX === null) {           
+            print_r('Review Title is NOT displayed!');
         }
-        else{
-            //print_r('Lennox Branding is Disabled!');
-            $checkemailPreviewLNX = $session->getPage()->find('css','#email_preview > div > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > img');
-            if ($checkemailPreviewLNX !== null) {           
-                print_r('Lennox Branding is Enabled!');
+    }
+
+    /**
+     * @Then I should see Replied on reviews
+     */
+    public function iShouldSeeRepliedOnReviews()
+    {
+        sleep(2);
+        $session = $this->getSession();
+        $session->executeScript('window.scrollTo(0,400);');
+        $checkemailPreviewLNX = $session->getPage()->find('css','div.reply-body');
+        if ($checkemailPreviewLNX !== null) {           
+            print_r('Review reply are displayed!');
+        }
+    }
+
+    /**
+     * @Then I should NOT see Replied on reviews
+     */
+    public function iShouldNotSeeRepliedOnReviews()
+    {
+        sleep(2);
+        $session = $this->getSession();
+        $session->executeScript('window.scrollTo(0,400);');
+        $checkemailPreviewLNX = $session->getPage()->find('css','div.reply-body');
+        if ($checkemailPreviewLNX === null) {           
+            print_r('Review reply are NOT displayed!');
+        }
+    }
+
+    /**
+     * @When I click :arg1 on replied review :arg2 and add :arg3
+     */
+    public function iClickOnRepliedReviewAndAdd($arg1, $arg2, $arg3)
+    {
+        $session = $this->getSession();
+        $elements = $session->getPage()->findAll('css',
+            sprintf('#service_areas_table > tbody tr'));  
+        $session->executeScript('window.scrollTo(0,500);');   
+        foreach($elements as $element){
+            $checkText = $element->find('css','.reply-text');
+            if(preg_match('/'. $arg2 .'/', $checkText->getText())){
+                $clickEdit = $element->find('css','div a:contains("EDIT")');
+                $clickEdit->click();
+                $textArea = $element->find('css','textarea');
+                $textArea->setValue($arg2.$arg3); 
+                $clickSave = $element->find('css', 'div a:contains("SAVE")');
+                $clickSave->click();
+                break;                   
             }
         }
     }
 
     /**
-     * @Then I should not see :arg1 skin
+     * @When I click :arg1 replied review :arg2
      */
-    public function iShouldNotSeeSkin($arg1)
+    public function iClickRepliedReview($arg1, $arg2)
     {
-        sleep(2);
         $session = $this->getSession();
-        $checkemailPreviewLNX = $session->getPage()->find('css','#email_preview > div > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > img');
-        if ($checkemailPreviewLNX === null) {           
-            print_r('Lennox Branding is Disabled!');
+        $elements = $session->getPage()->findAll('css',
+            sprintf('#service_areas_table > tbody tr'));  
+        $session->executeScript('window.scrollTo(0,500);');
+        foreach($elements as $element){
+            $checkText = $element->find('css','.reply-text');
+            if($arg1 === 'HIDE'){
+                if(preg_match('/'. $arg2 .'/', $checkText->getText())){
+                    $clickEdit = $element->find('css','div a:contains("HIDE")');
+                    $clickEdit->click();
+                    break;                   
+                }
+            }
+            elseif($arg1 === 'SHOW'){
+                if(preg_match('/'. $arg2 .'/', $checkText->getText())){
+                    $clickEdit = $element->find('css','div a:contains("SHOW")');
+                    $clickEdit->click();
+                    break;                   
+                }                
+            }
         }
     }
 }

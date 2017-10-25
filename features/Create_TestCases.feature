@@ -45,21 +45,6 @@ Feature: Create Test Cases
 		Then I should not see "Error: company with such name already exists in the database"
 		Then I save a screenshot
 
-	@createClientSingleSiteOnly
-    Scenario: Create New Client SingleSite
-		When I am authenticated as "adminUser"
-		And I press on "Add Client" button
-		And I fill in "company" with "Sprint7NewClientSingeSite"
-		And I check "options[send_as_feature]"
-		And I fill in "contact_email" with "Sprint7NewClientSingeSite@stage.com"
-		#And I check "buzzbox-title-on-client-dashboard"
-		#And I check "buzzbox-title-on-portal"
-		#And I check "buzzbox-title-on-public-pages"
-		And I check "buzzbox-review-only"
-		When I press "submit_client_form"
-		Then I should not see "Error: company with such name already exists in the database"
-		Then I save a screenshot		
-	
 	@searchClient
 	Scenario: Search for the newly created Client
 		When I am authenticated as "adminUser"

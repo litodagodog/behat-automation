@@ -40,6 +40,7 @@ Feature: Client Manager Dashboard for RB
 	Background:
 		Given there are following users:
 			| username | password   |
+			| adminUser    | test123 |
 			| clientManager@PeterPiper2.com    | test123 |
         And I am on "/"
 		And I click on login "Client Login"
@@ -255,7 +256,7 @@ Feature: Client Manager Dashboard for RB
 		Then I should see text matching "Feedback Requested"
 		Then I save a screenshot
 		
-	@ClientMngrSendReviewRequestsFromFeedback
+	@ClientMngrSendReviewRequestsForFeedback
     Scenario: As Client Manager I can Send Review Request from Feedback
 		When I am authenticated as "clientManager@PeterPiper2.com"
 		When I hover on "Manage"
@@ -279,4 +280,4 @@ Feature: Client Manager Dashboard for RB
 		And I click on "Send Feedback Request" button for customer "customer100"
 		When I click on "Sent Requests"
 		Then I should see text matching "Feedback Requested"
-		Then I save a screenshot											
+		Then I save a screenshot
