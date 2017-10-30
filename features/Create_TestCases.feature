@@ -23,10 +23,10 @@ Feature: Create Test Cases
 		Given there are following users:
 			| username | password   |
 			| adminUser    | test123 |
-			| sprint7manager    | test123 |
-			| sprint7master    | test123 |
-			| sprint7csr    | test123 |
-			| sprint7tech    | test123 |
+			| sprint8manager    | test123 |
+			| sprint8master    | test123 |
+			| sprint8csr    | test123 |
+			| sprint8tech    | test123 |
         And I am on "/"
 		And I click on login "Client Login"
 	
@@ -34,9 +34,9 @@ Feature: Create Test Cases
     Scenario: Create New Client BuzzBox Only
 		When I am authenticated as "adminUser"
 		And I press on "Add Client" button
-		And I fill in "company" with "Sprint7NewClientBuzzBox"
+		And I fill in "company" with "Auto001NewClient"
 		And I check "options[send_as_feature]"
-		And I fill in "contact_email" with "Sprint7NewClientBuzzBox@stage.com"
+		And I fill in "contact_email" with "Auto001NewClient@stage.com"
 		#And I check "buzzbox-title-on-client-dashboard"
 		#And I check "buzzbox-title-on-portal"
 		#And I check "buzzbox-title-on-public-pages"
@@ -48,9 +48,9 @@ Feature: Create Test Cases
 	@searchClient
 	Scenario: Search for the newly created Client
 		When I am authenticated as "adminUser"
-		And I fill in "keywords" with "Sprint7NewClient"
+		And I fill in "keywords" with "Auto001NewClient"
 		And I press "Search"
-		Then I should see the newly created client "Sprint7NewClient"
+		Then I should see the newly created client "Auto001NewClient"
 		Then I save a screenshot
 		
 	@createClientManager
@@ -59,11 +59,11 @@ Feature: Create Test Cases
 		And I hover on "Client Management"
 		And I click on "Manage User Accounts"
 		And I click on "Add User"
-		And I fill in "username" with "sprint7manager"
-		And I fill in "email" with "sprint7manager@stage.com"
+		And I fill in "username" with "sprint8manager"
+		And I fill in "email" with "sprint8manager@stage.com"
 		And I fill in "password" with "test123"
 		And I fill in "password_confirm" with "test123"
-		And I select "Sprint7NewClient" from "clients_id"
+		And I select "Auto001NewClient" from "clients_id"
 		And I select "client" from "memberships"
 		When I press "Save"
 		Then I should not see text matching "The username you entered"
@@ -71,7 +71,7 @@ Feature: Create Test Cases
 		
 	@loginAsClientManager
 	Scenario: Login as new Client Manager User
-		When I am authenticated as "sprint7manager"
+		When I am authenticated as "sprint8manager"
 		And I accept the term of use
 		When I click on "Dashboard Manager Pro"
 		Then I should be on "/clients"
@@ -83,8 +83,8 @@ Feature: Create Test Cases
 		And I hover on "Client Management"
 		And I click on "Manage Master Users"
 		And I click on "Add User"
-		And I fill in "username" with "sprint7master"
-		And I fill in "email" with "sprint7master@stage.com"
+		And I fill in "username" with "sprint8master"
+		And I fill in "email" with "sprint8master@stage.com"
 		And I fill in "password" with "test123"
 		And I fill in "password_confirm" with "test123"
 		When I press "Save"
@@ -93,10 +93,10 @@ Feature: Create Test Cases
 		
 	@loginAsMasterUser
 	Scenario: Login as new Master User
-		When I am authenticated as "sprint7master"
+		When I am authenticated as "sprint8master"
 		And I accept the term of use	
 		Then I should be on "/master_account"
-		Then I should see text matching "Hi,sprint7master"
+		Then I should see text matching "Hi,sprint8master"
 		Then I save a screenshot
 
 	@createCSRUser
@@ -105,11 +105,11 @@ Feature: Create Test Cases
 		And I hover on "Client Management"
 		And I click on "Manage User Accounts"
 		And I click on "Add User"
-		And I fill in "username" with "sprint7csr"
-		And I fill in "email" with "sprint7csr@stage.com"
+		And I fill in "username" with "sprint8csr"
+		And I fill in "email" with "sprint8csr@stage.com"
 		And I fill in "password" with "test123"
 		And I fill in "password_confirm" with "test123"
-		And I select "Sprint7NewClient" from "clients_id"
+		And I select "Auto001NewClient" from "clients_id"
 		And I select "csr" from "memberships"
 		When I press "Save"
 		Then I should not see text matching "The username you entered"
@@ -117,7 +117,7 @@ Feature: Create Test Cases
 		
 	@loginAsCSRUser
 	Scenario: Login as new CSR User
-		When I am authenticated as "sprint7csr"
+		When I am authenticated as "sprint8csr"
 		And I accept the term of use	
 		Then I should be on "/clients/feedback_requests/"
 		Then I should see text matching "Customer List"
@@ -129,11 +129,11 @@ Feature: Create Test Cases
 		And I hover on "Client Management"
 		And I click on "Manage User Accounts"
 		And I click on "Add User"
-		And I fill in "username" with "sprint7tech"
-		And I fill in "email" with "sprint7tech@stage.com"
+		And I fill in "username" with "sprint8tech"
+		And I fill in "email" with "sprint8tech@stage.com"
 		And I fill in "password" with "test123"
 		And I fill in "password_confirm" with "test123"
-		And I select "Sprint7NewClient" from "clients_id"
+		And I select "Auto001NewClient" from "clients_id"
 		And I select "technician" from "memberships"
 		When I press "Save"
 		Then I should not see text matching "The username you entered"
@@ -144,7 +144,7 @@ Feature: Create Test Cases
 		When I am authenticated as "adminUser"
 		And I hover on "Client Management"
 		And I click on "Manage User Accounts"
-		And I fill in "keywords" with "sprint7tech"
+		And I fill in "keywords" with "sprint8tech"
 		When I press "Search"
-		Then I should see the newly created user "sprint7tech"
+		Then I should see the newly created user "sprint8tech"
 		Then I save a screenshot

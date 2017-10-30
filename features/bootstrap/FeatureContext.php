@@ -175,12 +175,14 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function iSaveAScreenshot()
     {        
+        $session = $this->getSession();
         if (!is_dir('report/success_screenshots/')) 
         {
             mkdir('report/success_screenshots/', 0777, true);
         }       
         sleep(1);
         $scenarioName = $this->currentScenario->getTitle();
+        #$session->executeScript('window.scrollTo(0,400);');
         $this->saveScreenshot($scenarioName.'.png','report/success_screenshots/');
     }     
 
@@ -893,11 +895,8 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $findRB = $session->getPage()->findLink('ReviewBuzz');
         if($findRB === null){
             $findRBLogoOnWidget = $session->getPage()->find('css','body > div.widget.default > div > div.company_reviews_block > div.company_reviews > div.social_sites > a > img');
-            if($findRBLogoOnWidget === null){
-                pass;
-            }
-            else{
-                print_r('All Reviews are displayed in Public Page!');  
+            if($findRBLogoOnWidget !== null){
+                print_r('All Reviews are displayed in Public Page!');
             }
             
         }
@@ -1011,5 +1010,14 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 }                
             }
         }
+    }
+
+    /**
+     * @Given I scroll :arg1 down
+     */
+    public function iScrollDown($arg1)
+    {
+        $session = $this->getSession();
+        $session->executeScript('window.scrollTo(0,'.$arg1.');');
     }
 }

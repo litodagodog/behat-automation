@@ -97,9 +97,9 @@ Feature: CSR Dashboard Test Cases
 		When I hover on "Feedback"
 		And I click on "My Reviews"
 		Then I should be on "/csr_profile/?tab=reviews"
-		And I replied "Review Replied 302" on any buzzbox review
+		And I replied "Review Replied 305" on any buzzbox review
 		And I wait for 5 seconds
-		Then I should see text matching "Review Replied 302"
+		Then I should see text matching "Review Replied 305"
 		Then I save a screenshot
 		
 	@CSRRBFeedbackRequests
@@ -112,11 +112,11 @@ Feature: CSR Dashboard Test Cases
 		Then I should see text matching "Search for customer"
 		When I click on "+ Add"
 		Then I should see text matching "Enter Customer Data"
-		And I fill in "form_first_name" with "customer002"
-		And I fill in "form_last_name" with "customer002"
-		And I fill in "form_email" with "customer200@customer002.com"
+		And I fill in "form_first_name" with "customer005"
+		And I fill in "form_last_name" with "customer005"
+		And I fill in "form_email" with "customer005@customer005.com"
 		And I click on "Show Calendar"
-		And I select date "October 18, 2017"
+		And I select date "October 27, 2017"
 		And I fill in "team_users_names[]" with "CSRForPeterPiper2"
 		And I click on "Continue"
 		Then I should be on "clients/feedback_requests?type=pending&success=request_added"
@@ -131,10 +131,10 @@ Feature: CSR Dashboard Test Cases
 		And I click on "Review Requests"
 		Then I should be on "/clients/review_requests"
 		Then I should see text matching "Request Reviews"
-		And I fill in "emails" with "customer001,customer002"
+		And I fill in "emails" with "customer005,customer005"
 		When I click on "Send"
 		Then I should see text matching "Incorrectly formatted email"
-		And I fill in "emails" with "customer100@customer001.com,customer200@customer002.com"
+		And I fill in "emails" with "customer005@customer005.com,customer005@customer005.com"
 		When I click on "Send"
 		Then I should see text matching "Feedback Requested"
 		Then I save a screenshot			
@@ -194,9 +194,9 @@ Feature: CSR Dashboard Test Cases
 		When I hover on "Feedback"
 		And I click on "My Reviews"
 		Then I should be on "/csr_profile/?tab=reviews"
-		And I replied "Review Replied 302" on any buzzbox review
+		And I replied "Review Replied 305" on any buzzbox review
 		And I wait for 5 seconds
-		Then I should see text matching "Review Replied 302"
+		Then I should see text matching "Review Replied 305"
 		Then I save a screenshot
 		
 	@LMARBFeedbackRequests
@@ -209,11 +209,11 @@ Feature: CSR Dashboard Test Cases
 		Then I should see text matching "Search for customer"
 		When I click on "+ Add"
 		Then I should see text matching "Enter Customer Data"
-		And I fill in "form_first_name" with "customer002"
-		And I fill in "form_last_name" with "customer002"
-		And I fill in "form_email" with "customer200@customer002.com"
+		And I fill in "form_first_name" with "customer005"
+		And I fill in "form_last_name" with "customer005"
+		And I fill in "form_email" with "customer005@customer005.com"
 		And I click on "Show Calendar"
-		And I select date "October 18, 2017"
+		And I select date "October 27, 2017"
 		And I fill in "team_users_names[]" with "Employee014Quitter"
 		And I click on "Continue"
 		Then I should be on "clients/feedback_requests?type=pending&success=request_added"
@@ -228,10 +228,10 @@ Feature: CSR Dashboard Test Cases
 		And I click on "Review Requests"
 		Then I should be on "/clients/review_requests"
 		Then I should see text matching "Request Reviews"
-		And I fill in "emails" with "customer001,customer002"
+		And I fill in "emails" with "customer005,customer005"
 		When I click on "Send"
 		Then I should see text matching "Incorrectly formatted email"
-		And I fill in "emails" with "customer100@customer001.com,customer200@customer002.com"
+		And I fill in "emails" with "customer005@customer005.com,customer005@customer005.com"
 		When I click on "Send"
 		Then I should see text matching "Feedback Requested"
 		Then I save a screenshot
