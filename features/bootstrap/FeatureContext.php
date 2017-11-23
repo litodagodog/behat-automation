@@ -17,6 +17,14 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 {
 
 	private $users = array();
+    protected $options;
+    protected $downloadPath;
+
+    public function __construct($options = array())
+    {
+        $this->options = $options;
+        $this->downloadPath = isset($this->options['downloadPath']) ? $this->options['downloadPath'] : '';
+    }
 
 	/**
 	* @Given /^there are following users:$/
@@ -555,36 +563,23 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function bragbookForIsSaved($arg1)
     {
-        sleep(10);     
-        /***$options = new ChromeOptions();
-        $prefs = array('download.default_directory' => 'c:/temp/');
-        $options->setExperimentalOption('prefs', $prefs);
-        $capabilities = DesiredCapabilities::chrome(); // htmlUnitJS()
-        $capabilities->setCapability(ChromeOptions::CAPABILITY, $options);
-        $driver = RemoteWebDriver::create($host, $capabilities, 5000);  ***/      
-        /***$exists = false;
-        foreach (glob("*.pdf") as $filename) {
-            print $filename ."\n";
-            $filetoMatch = '/BragBook_' . $arg1 . '~\w+\.pdf/';
-            if(preg_match($filetoMatch, $filename)){
-                $exists = true;
-                print $filename ."\n";
-                break;
-            }
-        }     ***/ 
-        foreach(scandir('c:/users') as $file) 
+        sleep(10);
+        clearstatcache();
+        $bragbookDL = $this->downloadPath;  
+        $exists = false;
+        chdir($bragbookDL);
+        array_multisort(array_map('filemtime', ($files = glob("*.pdf"))), SORT_DESC, $files);
+        foreach($files as $filename)
         {
-            $filetoMatch = '/BragBook_' . $arg1 . '~\w+\.pdf~';
-            print preg_match($filetoMatch, $file);
-            if(preg_match($filetoMatch, $file)) 
+            if(preg_match('/^BragBook_' . $arg1 . '.*.pdf$/', $filename)) 
             {
                 $exists = true;
-                $absolute_path = realpath($filetoMatch);
-                print dirname($absolute_path);
+                //print $filename . "\n";
+                print_r($bragbookDL . $filename . " successfully downloaded!");
                 break;
             }
-            
-        }
+        }        
+
     }
 
     /**
@@ -594,12 +589,19 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         sleep(10);
         clearstatcache();
-        if (file_exists("C:/Users/LANEX-LITO/Downloads/reviews.xls")) 
+        $excelDL = $this->downloadPath;  
+        $exists = false;
+        chdir($excelDL);
+        array_multisort(array_map('filemtime', ($files = glob("*.xls"))), SORT_DESC, $files);
+        foreach($files as $filename)
         {
-            print "reviews.xls exists!";
-        } else 
-        {
-            print "reviews.xls does not exist!";
+            if(preg_match('/^reviews.*' . '.*.xls$/', $filename)) 
+            {
+                $exists = true;
+                //print $filename . "\n";
+                print_r($excelDL . $filename . " successfully downloaded!");
+                break;
+            }
         }
     }
 
