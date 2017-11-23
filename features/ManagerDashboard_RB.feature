@@ -1,4 +1,4 @@
-## Client use "PeterPiperPlumbingII" ###
+## Client use "sampleClient001" ###
 ## "Enable Review Request" should be enabled on client ##
 ## "BragBook" should be enabled on client ##
 ### scenario to be modified ###
@@ -41,76 +41,78 @@ Feature: Client Manager Dashboard for RB
 		Given there are following users:
 			| username | password   |
 			| adminUser    | test123 |
-			| clientManager@PeterPiper2.com    | test123 |
+			| sampleManager@stage.com    | test123 |
         And I am on "/"
 		And I click on login "Client Login"
 			
 	@ClientMngrlogin
 	Scenario: Login as Client Manager User for RB
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		Then I should not see "Enter Username or Email and valid password"
+		When I see welcome message I will close it
 		And I accept the term of use
 		Then I should be on "/clients/reviews"
 		Then I save a screenshot
 
 	@ClientMngrCreateTechnician
 	Scenario: As Client Manager I can Create technician user
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
+		When I see welcome message I will close it
 		And I hover on "Settings"
 		And I click on "Team Members"
 		Then I should see text matching "Team member list"
 		When I click on "Add New member"
-		And I fill in "users_first_name" with "TechForPeterPiper3"
-		And I fill in "last_name" with "TechForPeterPiper3"
-		And I fill in "email" with "TechForPeterPiper3@PeterPiper2.com"
+		And I fill in "users_first_name" with "TechClient001"
+		And I fill in "last_name" with "TechClient001"
+		And I fill in "email" with "TechClient001@PeterPiper2.com"
 		And I fill in "users_password" with "test123"
 		And I fill in "users_password_repeat" with "test123"
 		And I click on "Field/Service"
 		When I press "submit_button"
-		Then I should see the newly created user "TechForPeterPiper3"
+		Then I should see the newly created user "TechClient001"
 		Then I save a screenshot
 
 	@ClientMngrDeactivateTechnician
 	Scenario: As Client Manager I can Deactivate technician user
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		And I hover on "Settings"
 		And I click on "Team Members"
 		## just put the fist name of the employee ##
-		When I deactivate the user "TechForPeterPiper3"
+		When I deactivate the user "TechClient001"
 		Then I save a screenshot		
 
 	@ClientMngrCreateCSR
 	Scenario: As Client Manager I can Create CSR user
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		And I hover on "Settings"
 		And I click on "Team Members"
 		Then I should see text matching "Team member list"
 		When I click on "Add New member"
-		And I fill in "users_first_name" with "CSRForPeterPiper3"
-		And I fill in "last_name" with "CSRForPeterPiper3"
-		And I fill in "email" with "CSRForPeterPiper3@PeterPiper2.com"
+		And I fill in "users_first_name" with "CSRClient001"
+		And I fill in "last_name" with "CSRClient001"
+		And I fill in "email" with "CSRClient001@PeterPiper2.com"
 		And I fill in "users_password" with "test123"
 		And I fill in "users_password_repeat" with "test123"
-		And I click on "Field/Service"
+		And I click on "Office Staff"
 		And I click on "Employee Access"
 		And I click Alert Confirmation
 		And I click Alert Confirmation
 		When I press "submit_button"
-		Then I should see the newly created user "CSRForPeterPiper3"
+		Then I should see the newly created user "CSRClient001"
 		Then I save a screenshot	
 
 	@ClientMngrDeactivateCSR
 	Scenario: As Client Manager I can Deactivate CSR user
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		And I hover on "Settings"
 		And I click on "Team Members"
 		## just put the fist name of the employee ##
-		When I deactivate the user "CSRForPeterPiper3"
+		When I deactivate the user "CSRClient001"
 		Then I save a screenshot
 
 	@ClientMngrSearchforReviews
 	Scenario: As Client Manager I can search for reviews
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		#And I hover on "Feedback"
 		#And I click on "View Reviews"
 		#Then I should be on "/clients/reviews?rs=reviews"
@@ -120,7 +122,7 @@ Feature: Client Manager Dashboard for RB
 
 	@ClientMngrSearchforReviewsByDate
 	Scenario: As Client Manager I can search for reviews by date
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		And I select "January" from "start_date-mm"
 		And I select "1" from "start_date-dd"
 		And I select "2010" from "start_date"
@@ -130,9 +132,9 @@ Feature: Client Manager Dashboard for RB
 
 	@ClientMngrSearchforReviewsByEmployee
 	Scenario: As Client Manager I can search for reviews by employee
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		And I click on element "Display All"
-		And I check "CSRForPeterPiper3"
+		And I check "sampleCSR"
 		And I click on element "Display All"
 		And I press "Search"
 		Then I should see text matching "Reviews"
@@ -140,7 +142,7 @@ Feature: Client Manager Dashboard for RB
 
 	@ClientMngrSearchforReviewsBySites
 	Scenario: As Client Manager I can search for reviews by sites
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		And I select "Google" from "sites"
 		And I wait for 5 seconds
 		Then I should see text matching "Reviews"
@@ -148,61 +150,61 @@ Feature: Client Manager Dashboard for RB
 
 	@ClientMngrPickFeatureReview
 	Scenario: As Client Manager I can pick feature review
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		When I press "Feature a Review"
 		### use firstname of reviewer"
 		And I wait for 5 seconds
-		And I pick "test02" as featured review
+		And I pick "sample3" as featured review
 		And I press "featured_review_confirm"
 		And I wait for 5 seconds
-		Then I should see text matching "Featured review test02"
+		Then I should see text matching "Featured review Linus"
 		Then I save a screenshot	
 
 	@ClientMngrDownloadBragbook
 	Scenario: As Client Manager I can download brag book
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		And I click on element "Display All"
-		And I check "CSRForPeterPiper3"
+		And I check "sampleCSR"		
 		And I click on element "Display All"
 		And I press "Search"
 		When I press "Brag book"
-		Then bragbook for "CSRForPeterPiper3" is saved
+		Then bragbook for "sampleCSR" is saved
 
 	@ClientMngrDownloadExcel
 	Scenario: As Client Manager I can download excel
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		And I press "Download Excel"
 		Then Excel file is successfully saved
 
 	@ClientMngrDeleteReview
 	Scenario: As Client Manager I can Delete a review
-		When I am authenticated as "clientManager@PeterPiper2.com"
-		And I delete "test01" review from list
+		When I am authenticated as "sampleManager@stage.com"
+		And I delete "sample3" review from list		
 		When I click on "See deleted reviews >>"
 		Then I should be on "/clients/reviews/deleted"
-		Then I should see text matching "test01"
+		Then I should see text matching "sample3"
 		Then I save a screenshot
 
 	@ClientMngrUndeleteReview
 	Scenario: As Client Manager I can Undelete a review
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		And I click on "See deleted reviews >>"
 		Then I should be on "/clients/reviews/deleted"
-		When I undelete "test01" review from list
-		Then I should see text matching "test01"
+		When I undelete "sample3" review from list
+		Then I should see text matching "sample3"
 		Then I save a screenshot
 
 	@ClientMngrReplyBuzzboxReview
     Scenario: As Client Manager I can reply to buzzbox
-		When I am authenticated as "clientManager@PeterPiper2.com"
-		And I replied "Review Replied 302" on any buzzbox review
+		When I am authenticated as "sampleManager@stage.com"
+		And I replied "sample buzzbox reply" on any buzzbox review
 		And I wait for 5 seconds
-		Then I should see text matching "Review Replied 302"
+		Then I should see text matching "sample buzzbox reply"
 		Then I save a screenshot
 
 	@ClientMngrViewSurveysData
     Scenario: As Client Manager I can View Surveys
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		When I hover on "Feedback"
 		And I click on "View Surveys"
 		Then I should see text matching "Surveys"
@@ -210,7 +212,7 @@ Feature: Client Manager Dashboard for RB
 
 	@ClientMngrSearchSurveysByDate
 	Scenario: As Client Manager I can search surveys by date
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		When I hover on "Feedback"
 		And I click on "View Surveys"		
 		And I select "January" from "start_date-mm"
@@ -222,17 +224,17 @@ Feature: Client Manager Dashboard for RB
 
 	@ClientMngrSearchSurveysByEmployee
 	Scenario: As Client Manager I can search surveys by employee
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		When I hover on "Feedback"
 		And I click on "View Surveys"		
-		And I select "Justin" from "techs"
+		And I select "sampleCSR" from "techs"
 		And I wait for 5 seconds
-		Then I should see text matching "Justin"
+		Then I should see text matching "sampleCSR"
 		Then I save a screenshot
 
 	@ClientMngrPreviewTemplate
     Scenario: As Client Manager I can Preview template on Review requests
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		When I hover on "Manage"
 		And I click on "Review Requests"
 		Then I should be on "/clients/review_requests"
@@ -243,7 +245,7 @@ Feature: Client Manager Dashboard for RB
 
 	@ClientMngrSendReviewRequests
     Scenario: As Client Manager I can Send Review Requests
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		When I hover on "Manage"
 		And I click on "Review Requests"
 		Then I should be on "/clients/review_requests"
@@ -258,7 +260,7 @@ Feature: Client Manager Dashboard for RB
 		
 	@ClientMngrSendReviewRequestsForFeedback
     Scenario: As Client Manager I can Send Review Request from Feedback
-		When I am authenticated as "clientManager@PeterPiper2.com"
+		When I am authenticated as "sampleManager@stage.com"
 		When I hover on "Manage"
 		And I click on "Feedback Requests"
 		Then I should be on "/clients/feedback_requests"
@@ -270,8 +272,8 @@ Feature: Client Manager Dashboard for RB
 		And I fill in "form_last_name" with "customer100"
 		And I fill in "form_email" with "customer100@customer100.com"
 		And I click on "Show Calendar"
-		And I select date "October 27, 2017"
-		And I fill in "team_users_names[]" with "Justin"
+		And I select date "November 22, 2017"
+		And I fill in "team_users_names[]" with "sampleCSR"
 		And I click on "Continue"
 		Then I should be on "clients/feedback_requests?type=pending&success=request_added"
 		When I click on "Send Meet the team Email" button for customer "customer100"

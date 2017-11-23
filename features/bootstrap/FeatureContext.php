@@ -263,7 +263,9 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 $element->click();
                 break;
             case 'Field/Service':
-                $element = $session->getPage()->find("css", "#frm_add_edit_user>div:nth-child(6)>div>table>tbody>tr:nth-child(2)>td:nth-child(1)>input[type='radio']");
+                ##frm_add_edit_user > div:nth-child(8) > div > table > tbody > tr:nth-child(2) > td:nth-child(1) > input[type="radio"]
+                $element = $session->getPage()->find("css", '#frm_add_edit_user > div:nth-child(8) > div > table > tbody > tr:nth-child(2) > td:nth-child(1) > input[type="radio"]');
+
                 if (null === $element) 
                 {
                     throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
@@ -271,6 +273,16 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 
                 $element->click();
                 break;
+            case 'Office Staff':
+                $element = $session->getPage()->find("css", '#frm_add_edit_user > div:nth-child(8) > div > table > tbody > tr:nth-child(3) > td:nth-child(1) > input[type="radio"]');
+
+                if (null === $element) 
+                {
+                    throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
+                }
+
+                $element->click();
+                break;                
             case 'Employee Access':
                 $element = $session->getPage()->find("css", "#is_csr");
                 
@@ -543,15 +555,35 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function bragbookForIsSaved($arg1)
     {
-        sleep(10);
-        $exists = false;
-        foreach(scandir('C:/Users/LANEX-LITO/Downloads') as $file) 
-        {
-            if(preg_match('/BragBook_' . $arg1 . '\.$/', $file)) 
-            {
+        sleep(10);     
+        /***$options = new ChromeOptions();
+        $prefs = array('download.default_directory' => 'c:/temp/');
+        $options->setExperimentalOption('prefs', $prefs);
+        $capabilities = DesiredCapabilities::chrome(); // htmlUnitJS()
+        $capabilities->setCapability(ChromeOptions::CAPABILITY, $options);
+        $driver = RemoteWebDriver::create($host, $capabilities, 5000);  ***/      
+        /***$exists = false;
+        foreach (glob("*.pdf") as $filename) {
+            print $filename ."\n";
+            $filetoMatch = '/BragBook_' . $arg1 . '~\w+\.pdf/';
+            if(preg_match($filetoMatch, $filename)){
                 $exists = true;
+                print $filename ."\n";
                 break;
             }
+        }     ***/ 
+        foreach(scandir('c:/users') as $file) 
+        {
+            $filetoMatch = '/BragBook_' . $arg1 . '~\w+\.pdf~';
+            print preg_match($filetoMatch, $file);
+            if(preg_match($filetoMatch, $file)) 
+            {
+                $exists = true;
+                $absolute_path = realpath($filetoMatch);
+                print dirname($absolute_path);
+                break;
+            }
+            
         }
     }
 
@@ -677,7 +709,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $session = $this->getSession();
         $elements = $session->getPage()->findAll('css',
             sprintf('#service_areas_table > tbody tr'));  
-        $session->executeScript('window.scrollTo(0,500);');   
+        $session->executeScript('window.scrollTo(0,400);');   
         foreach($elements as $element){
             $checkReply = $element->find('css','.reply-button');
             if ($checkReply != NULL) {
@@ -969,7 +1001,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $session = $this->getSession();
         $elements = $session->getPage()->findAll('css',
             sprintf('#service_areas_table > tbody tr'));  
-        $session->executeScript('window.scrollTo(0,500);');   
+        $session->executeScript('window.scrollTo(0,400);');   
         foreach($elements as $element){
             $checkText = $element->find('css','.reply-text');
             if(preg_match('/'. $arg2 .'/', $checkText->getText())){
@@ -992,7 +1024,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $session = $this->getSession();
         $elements = $session->getPage()->findAll('css',
             sprintf('#service_areas_table > tbody tr'));  
-        $session->executeScript('window.scrollTo(0,500);');
+        $session->executeScript('window.scrollTo(0,400);');
         foreach($elements as $element){
             $checkText = $element->find('css','.reply-text');
             if($arg1 === 'HIDE'){
@@ -1019,5 +1051,22 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         $session = $this->getSession();
         $session->executeScript('window.scrollTo(0,'.$arg1.');');
+    }
+
+    /**
+     * @When I see welcome message I will close it
+     */
+    public function iSeeWelcomeMessageIWillCloseIt()
+    {
+        sleep(2);
+        $session = $this->getSession();
+        //$session = $this->assertSession()->elementExists('css', '#wm-shoutout-8978 > div.wm-close-button.walkme-x-button');
+        $checkWelcomMsg = $session->getPage()->find('css','div.wm-close-button.walkme-x-button');
+        if ($checkWelcomMsg !== null) {           
+            $checkWelcomMsg->click();
+        }
+        else{
+
+        }
     }
 }

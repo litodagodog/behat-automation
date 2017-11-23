@@ -1,4 +1,4 @@
-## Client use "Stuart Services" ###
+## Client use "sampleClient-LNX" ###
 ## "Enable Review Request" should be enabled on client ##
 ## "BragBook" should be enabled on client ##
 ### scenario to be modified ###
@@ -40,76 +40,77 @@ Feature: Client Manager Dashboard with Lennox Branding
 	Background:
 		Given there are following users:
 			| username | password   |
-			| stuartAdmin@stage.com    | test123 |
+			| sampleManagerLNX@stage.com    | test123 |
         And I am on "/"
 		And I click on login "Client Login"
 			
 	@ClientMngrlogin
 	Scenario: Login As Client Manager with LNX User with Lennox Branding
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		Then I should not see "Enter Username or Email and valid password"
+		When I see welcome message I will close it
 		And I accept the term of use
 		Then I should be on "/clients/home/kpi_dashboard"
 		Then I save a screenshot
 
 	@ClientMngrCreateTechnician
 	Scenario: As Client Manager with LNX I can Create technician user
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Settings"
 		And I click on "Team Members"
 		Then I should see text matching "Team member list"
 		When I click on "Add New member"
-		And I fill in "users_first_name" with "TechForStuart"
-		And I fill in "last_name" with "TechForStuart"
-		And I fill in "email" with "TechForStuart@StuartServices.com"
+		And I fill in "users_first_name" with "TechLNXClient"
+		And I fill in "last_name" with "TechLNXClient"
+		And I fill in "email" with "TechLNXClient@StuartServices.com"
 		And I fill in "users_password" with "test123"
 		And I fill in "users_password_repeat" with "test123"
 		And I click on "Field/Service"
 		When I press "submit_button"
-		Then I should see the newly created user "TechForStuart"
+		Then I should see the newly created user "TechLNXClient"
 		Then I save a screenshot
 
 	@@ClientMngrDeactivateTechnician
 	Scenario: As Client Manager with LNX I can Deactivate technician user
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Settings"
 		And I click on "Team Members"
 		## just put the fist name of the employee ##
-		When I deactivate the user "TechForStuart"
+		When I deactivate the user "TechLNXClient"
 		Then I save a screenshot		
 
 	@ClientMngrCreateCSR
 	Scenario: As Client Manager with LNX I can Create CSR user
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Settings"
 		And I click on "Team Members"
 		Then I should see text matching "Team member list"
 		When I click on "Add New member"
-		And I fill in "users_first_name" with "CSRForStuart"
-		And I fill in "last_name" with "CSRForStuart"
-		And I fill in "email" with "CSRForStuart@StuartServices.com"
+		And I fill in "users_first_name" with "CSRLNXClient"
+		And I fill in "last_name" with "CSRLNXClient"
+		And I fill in "email" with "CSRLNXClient@StuartServices.com"
 		And I fill in "users_password" with "test123"
 		And I fill in "users_password_repeat" with "test123"
-		And I click on "Field/Service"
+		And I click on "Office Staff"
 		And I click on "Employee Access"
 		And I click Alert Confirmation
 		And I click Alert Confirmation
 		When I press "submit_button"
-		Then I should see the newly created user "CSRForStuart"
+		Then I should see the newly created user "CSRLNXClient"
 		Then I save a screenshot	
 
 	@ClientMngrDeactivateCSR
 	Scenario: As Client Manager with LNX I can Deactivate CSR user
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Settings"
 		And I click on "Team Members"
 		## just put the fist name of the employee ##
-		When I deactivate the user "CSRForStuart"
+		When I deactivate the user "CSRLNXClient"
 		Then I save a screenshot
 
 	@ClientMngrSearchforReviews
 	Scenario: As Client Manager with LNX I can search for reviews
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Feedback"
 		And I click on "View Reviews"
 		Then I should be on "/clients/reviews?rs=reviews"
@@ -119,7 +120,7 @@ Feature: Client Manager Dashboard with Lennox Branding
 
 	@ClientMngrSearchforReviewsByDate
 	Scenario: As Client Manager with LNX I can search for reviews by date
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Feedback"
 		And I click on "View Reviews"		
 		And I select "January" from "start_date-mm"
@@ -131,12 +132,11 @@ Feature: Client Manager Dashboard with Lennox Branding
 
 	@ClientMngrSearchforReviewsByEmployee
 	Scenario: As Client Manager with LNX I can search for reviews by employee
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Feedback"
 		And I click on "View Reviews"		
 		And I click on element "Display All"
-		And I check "Donald"
-		#And I select "Donald" from "techs"
+		And I check "sampleCSRLNX"
 		And I click on element "Display All"
 		And I select "January" from "start_date-mm"
 		And I select "1" from "start_date-dd"
@@ -147,7 +147,7 @@ Feature: Client Manager Dashboard with Lennox Branding
 
 	@ClientMngrSearchforReviewsBySites
 	Scenario: As Client Manager with LNX I can search for reviews by sites
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Feedback"
 		And I click on "View Reviews"		
 		And I select "Google" from "sites"
@@ -161,7 +161,7 @@ Feature: Client Manager Dashboard with Lennox Branding
 
 	@ClientMngrPickFeatureReview
 	Scenario: As Client Manager with LNX I can pick feature review
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Feedback"
 		And I click on "View Reviews"		
 		And I select "January" from "start_date-mm"
@@ -171,19 +171,19 @@ Feature: Client Manager Dashboard with Lennox Branding
 		When I press "Feature a Review"
 		### use firstname of reviewer"
 		And I wait for 5 seconds
-		And I pick "Sarah" as featured review
+		And I pick "11212017review001" as featured review
 		And I press "featured_review_confirm"
 		And I wait for 5 seconds
-		Then I should see text matching "Featured review Sarah"
+		Then I should see text matching "Featured review 11212017review001"
 		Then I save a screenshot	
 
 	@ClientMngrDownloadBragbook
 	Scenario: As Client Manager with LNX I can download brag book
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Feedback"
 		And I click on "View Reviews"		
 		And I click on element "Display All"
-		And I check "Donald"
+		And I check "sampleCSRLNX"
 		#And I select "Donald" from "techs"
 		And I click on element "Display All"
 		And I select "January" from "start_date-mm"
@@ -192,11 +192,11 @@ Feature: Client Manager Dashboard with Lennox Branding
 		And I press "Search"
 		And I wait for 5 seconds
 		When I press "Brag book"
-		Then bragbook for "Donald" is saved
+		Then bragbook for "sampleCSRLNX" is saved
 
 	@ClientMngrDownloadExcel
 	Scenario: As Client Manager with LNX I can download excel
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Feedback"
 		And I click on "View Reviews"		
 		And I select "January" from "start_date-mm"
@@ -208,51 +208,51 @@ Feature: Client Manager Dashboard with Lennox Branding
 
 	@ClientMngrDeleteReview
 	Scenario: As Client Manager with LNX I can Delete a review
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Feedback"
 		And I click on "View Reviews"		
 		And I select "January" from "start_date-mm"
 		And I select "1" from "start_date-dd"
 		And I select "2010" from "start_date"			
 		And I press "Search"		
-		And I delete "Gale" review from list
+		And I delete "customer02" review from list
 		When I click on "See deleted reviews >>"
 		Then I should be on "/clients/reviews/deleted"
-		Then I should see text matching "Gale"
+		Then I should see text matching "customer02"
 		Then I save a screenshot
 
 	@ClientMngrUndeleteReview
 	Scenario: As Client Manager with LNX I can Undelete a review
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Feedback"
 		And I click on "View Reviews"		
 		And I click on "See deleted reviews >>"
 		Then I should be on "/clients/reviews/deleted"
-		When I undelete "Gale" review from list
+		When I undelete "customer02" review from list
 		And I select "January" from "start_date-mm"
 		And I select "1" from "start_date-dd"
 		And I select "2010" from "start_date"			
 		And I press "Search"		
-		Then I should see text matching "Gale"
+		Then I should see text matching "customer02"
 		Then I save a screenshot
 
 	@ClientMngrReplyBuzzboxReview
     Scenario: As Client Manager with LNX I can reply to buzzbox
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		And I hover on "Feedback"
 		And I click on "View Reviews"
 		And I select "January" from "start_date-mm"
 		And I select "1" from "start_date-dd"
 		And I select "2010" from "start_date"			
 		And I press "Search"				
-		And I replied "Review Replied 400" on any buzzbox review
+		And I replied "automation buzzbox reply" on any buzzbox review
 		And I wait for 5 seconds
-		Then I should see text matching "Review Replied 400"
+		Then I should see text matching "automation buzzbox reply"
 		Then I save a screenshot
 
 	@ClientMngrViewSurveysData
     Scenario: As Client Manager with LNX I can View Surveys
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		When I hover on "Feedback"
 		And I click on "View Surveys"				
 		Then I should see text matching "Surveys"
@@ -260,7 +260,7 @@ Feature: Client Manager Dashboard with Lennox Branding
 
 	@ClientMngrSearchSurveysByDate
 	Scenario: As Client Manager with LNX I can search surveys by date
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		When I hover on "Feedback"
 		And I click on "View Surveys"		
 		And I select "January" from "start_date-mm"
@@ -272,17 +272,17 @@ Feature: Client Manager Dashboard with Lennox Branding
 
 	@ClientMngrSearchSurveysByEmployee
 	Scenario: As Client Manager with LNX I can search surveys by employee
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		When I hover on "Feedback"
 		And I click on "View Surveys"		
-		And I select "Donald" from "techs"
+		And I select "sampleCSRLNX" from "techs"
 		And I wait for 5 seconds
-		Then I should see text matching "Donald"
+		Then I should see text matching "sampleCSRLNX"
 		Then I save a screenshot
 
 	@ClientMngrPreviewTemplate
     Scenario: As Client Manager with LNX I can Preview template on Review requests
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		When I hover on "Manage"
 		And I click on "Review Requests"
 		Then I should be on "/clients/review_requests"
@@ -293,7 +293,7 @@ Feature: Client Manager Dashboard with Lennox Branding
 
 	@ClientMngrSendReviewRequests
     Scenario: As Client Manager with LNX I can Send Review Requests
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		When I hover on "Manage"
 		And I click on "Review Requests"
 		Then I should be on "/clients/review_requests"
@@ -308,7 +308,7 @@ Feature: Client Manager Dashboard with Lennox Branding
 
 	@ClientMngrSendReviewRequestsFromFeedback
     Scenario: As Client Manager with LNX I can Send Review Request from Feedback
-		When I am authenticated as "stuartAdmin@stage.com"
+		When I am authenticated as "sampleManagerLNX@stage.com"
 		When I hover on "Manage"
 		And I click on "Feedback Requests"
 		Then I should be on "/clients/feedback_requests"
@@ -319,8 +319,8 @@ Feature: Client Manager Dashboard with Lennox Branding
 		And I fill in "form_last_name" with "customer101"
 		And I fill in "form_email" with "customer101@customer101.com"
 		And I click on "Show Calendar"
-		And I select date "October 27, 2017"
-		And I fill in "team_users_names[]" with "Donald"
+		And I select date "November 23, 2017"
+		And I fill in "team_users_names[]" with "sampleCSRLNX"
 		And I click on "Continue"
 		Then I should be on "clients/feedback_requests?type=pending&success=request_added"
 		When I click on "Send Meet the team Email" button for customer "customer101"
