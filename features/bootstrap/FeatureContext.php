@@ -16,7 +16,7 @@ use Behat\Behat\Event\StepEvent;
 class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
 {
 
-	private $users = array();
+    private $users = array();
     protected $options;
     protected $downloadPath;
 
@@ -26,15 +26,15 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $this->downloadPath = isset($this->options['downloadPath']) ? $this->options['downloadPath'] : '';
     }
 
-	/**
-	* @Given /^there are following users:$/
-	*/
-	public function thereAreFollowingUsers(TableNode $table) {
-		foreach ($table->getHash() as $row) 
+    /**
+    * @Given /^there are following users:$/
+    */
+    public function thereAreFollowingUsers(TableNode $table) {
+        foreach ($table->getHash() as $row) 
         {
-			$this->users[$row['username']] = $row;
-		}
-	}	
+            $this->users[$row['username']] = $row;
+        }
+    }   
 
     /**
      * @BeforeScenario
@@ -47,11 +47,11 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $this->currentScenario = $scope->getScenario();
 
     }    
-	
-	/**
-	   * @Given /^I set browser window size to "([^"]*)" x "([^"]*)"$/
-	   */
-	public function iSetBrowserWindowSizeToX($width, $height) 
+    
+    /**
+       * @Given /^I set browser window size to "([^"]*)" x "([^"]*)"$/
+       */
+    public function iSetBrowserWindowSizeToX($width, $height) 
     {
         $this->getSession()->resizeWindow((int)$width, (int)$height, 'current');
     }
@@ -62,7 +62,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function iClickOnText($arg1)
     {
         $session = $this->getSession();
-		$element = $session->getPage()->find('named', array('link', $arg1));
+        $element = $session->getPage()->find('named', array('link', $arg1));
         if (null === $element) {
             throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
         }
@@ -96,14 +96,14 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         $session = $this->getSession();
         $element = $session->getPage()->find("css", "#login_form>table>tbody>tr:nth-child(4)>td:nth-child(2)>table>tbody>tr>td:nth-child(3)>button>span");
-		if (!$element)
+        if (!$element)
         {
-			throw new Exception($arg1 . " could not be found");
-		}
+            throw new Exception($arg1 . " could not be found");
+        }
         else
         {
-			$element->click();
-		}
+            $element->click();
+        }
     }
 
     /**
@@ -113,14 +113,14 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         $session = $this->getSession();
         $element = $session->getPage()->find("css", "#admin-topmenu>a:nth-child(2)>li");
-		if (!$element)
+        if (!$element)
         {
-			throw new Exception($arg1 . " could not be found");
-		} 
+            throw new Exception($arg1 . " could not be found");
+        } 
         else 
         {
-			$element->click();
-		}
+            $element->click();
+        }
     }*/
 
     /**
@@ -130,15 +130,15 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         $session = $this->getSession();
         $element = $session->getPage()->find("css", "#add_client");
-		if (!$element)
+        if (!$element)
         {
-			throw new Exception($arg1 . " could not be found");
-		} 
+            throw new Exception($arg1 . " could not be found");
+        } 
         else 
         {
-			$element->click();
-		}
-    }	  
+            $element->click();
+        }
+    }     
 
 
     /**
@@ -146,14 +146,14 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function iAmAuthenticatedAs($username)
     {
-		if (!isset($this->users[$username]['password'])) 
+        if (!isset($this->users[$username]['password'])) 
         {
-			throw new \OutOfBoundsException('Invalid user '. $username);
-		}
-		$this->fillField('username', $username);
-		$this->fillField('password', $this->users[$username]['password']);
-		$this->pressButton('Log In');	
-		sleep(3);
+            throw new \OutOfBoundsException('Invalid user '. $username);
+        }
+        $this->fillField('username', $username);
+        $this->fillField('password', $this->users[$username]['password']);
+        $this->pressButton('Log In');   
+        sleep(3);
     }
 
     /**
@@ -209,12 +209,12 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         $session = $this->getSession();
         $element = $session->getPage()->find("css", '#agree_button');
-		if ($element) 
+        if ($element) 
         {
-			$element->click();
-		} else 
+            $element->click();
+        } else 
         {
-		}
+        }
     }
 
     /**
@@ -222,8 +222,8 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function iShouldSeeTheNewlyCreatedClient($arg1)
     {
-		$td = $this->getSession()->getPage()->find('css',
-			sprintf('table tbody tr td:contains("%s")', $arg1));
+        $td = $this->getSession()->getPage()->find('css',
+            sprintf('table tbody tr td:contains("%s")', $arg1));
     }
 
     /**
@@ -231,7 +231,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function iClickOn($arg1)
     {
-		sleep(3);
+        sleep(3);
         $session = $this->getSession();
         switch($arg1){
             case 'Reply':
@@ -353,8 +353,8 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function iShouldSeeTheNewlyCreatedUser($arg1)
     {
-		$td = $this->getSession()->getPage()->find('css',
-			sprintf('table tbody tr td:contains("%s")', $arg1));
+        $td = $this->getSession()->getPage()->find('css',
+            sprintf('table tbody tr td:contains("%s")', $arg1));
     }
 
     /**
@@ -362,30 +362,30 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function iClickOnEmployee($arg1)
     {
-		sleep(3);
-		$session = $this->getSession();
-		try
-		{
-			$element = $session->getPage()->find('named', array('content', $arg1));
-			$element->click();
-		}
-		catch(\WebDriver\Exception\ElementNotVisible $f)
-		{
-			$checkElem = $session->getPage()->find("css", '#peoples>div.next_arrow1>a>img');		
-			if ($checkElem)
-			{
-				$checkElem->click();
-				sleep(3);
-				$elementNext = $session->getPage()->find('named', array('content', $arg1));
-				if($elementNext)
-				{
-					$elementNext->click();
-				}
-				else{
-					echo "element not found!";
-				}
-			}
-		}			
+        sleep(3);
+        $session = $this->getSession();
+        try
+        {
+            $element = $session->getPage()->find('named', array('content', $arg1));
+            $element->click();
+        }
+        catch(\WebDriver\Exception\ElementNotVisible $f)
+        {
+            $checkElem = $session->getPage()->find("css", '#peoples>div.next_arrow1>a>img');        
+            if ($checkElem)
+            {
+                $checkElem->click();
+                sleep(3);
+                $elementNext = $session->getPage()->find('named', array('content', $arg1));
+                if($elementNext)
+                {
+                    $elementNext->click();
+                }
+                else{
+                    echo "element not found!";
+                }
+            }
+        }           
     }
 
     /**
@@ -393,16 +393,16 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function iAddStarReview($arg1)
     {
-		sleep(3);
+        sleep(3);
         $session = $this->getSession();
         $element = $session->getPage()->find("css", '#rating_stars_new>div:nth-child(' . $arg1 . ')');
-		if ($element) 
+        if ($element) 
         {
-			$element->click();
-		} 
+            $element->click();
+        } 
         else 
         {
-		}
+        }
     }
 
     /**
@@ -410,28 +410,28 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function iHoverOn($arg1)
     {
-		sleep(2);
-		$session = $this->getSession();
-		if ($arg1 === 'Feedback')
-		{
-			$element = $session->getPage()->find('named', array('id', 'reviews'));
-			if (null === $element) 
+        sleep(2);
+        $session = $this->getSession();
+        if ($arg1 === 'Feedback')
+        {
+            $element = $session->getPage()->find('named', array('id', 'reviews'));
+            if (null === $element) 
             {
-				throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
-			}	 
+                throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
+            }    
 
-			$element->mouseOver();
-		}
-		elseif ($arg1 === 'Manage')
-		{
-			$element = $session->getPage()->find('named', array('id', 'manage'));
-			if (null === $element) 
+            $element->mouseOver();
+        }
+        elseif ($arg1 === 'Manage')
+        {
+            $element = $session->getPage()->find('named', array('id', 'manage'));
+            if (null === $element) 
             {
-				throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
-			}
+                throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
+            }
 
-			$element->mouseOver();			
-		}
+            $element->mouseOver();          
+        }
         elseif ($arg1 === 'Settings')
         {
             $element = $session->getPage()->find('named', array('id', 'account'));
@@ -442,8 +442,8 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 
             $element->mouseOver();          
         }        
-		else
-		{
+        else
+        {
             $session = $this->getSession();
             $element = $session->getPage()->find('named', array('content', $arg1));
             if (null === $element) 
@@ -452,7 +452,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             }
      
             $element->mouseOver();
-		}		
+        }       
     }
 
 
