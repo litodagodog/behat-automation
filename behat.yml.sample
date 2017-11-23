@@ -1,10 +1,4 @@
 default:
-    suites:
-        default:
-            contexts:
-                - FeatureContext:
-                    options: 
-                        downloadPath: 'C:/Users/LANEX-LITO/Downloads/'
     formatters:
         html:
             output_path: %paths.base%/report
@@ -22,8 +16,13 @@ default:
         emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
             name: html
             renderer: Twig
-            file_name: Report
+            file_name: Reports_featuresTestCases
             print_args: true
             print_outp: true
-            loop_break: true            
-
+            loop_break: true
+    suites:
+        default:
+            contexts:
+                - FeatureContext:
+                    options: 
+                        downloadPath: 'C:/Users/LANEX-LITO/Downloads/'          

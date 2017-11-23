@@ -578,6 +578,10 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 print_r($bragbookDL . $filename . " successfully downloaded!");
                 break;
             }
+            else{
+                print_r($bragbookDL . $filename . " is NOT downloaded!");
+                break;
+            }
         }        
 
     }
@@ -600,6 +604,10 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 $exists = true;
                 //print $filename . "\n";
                 print_r($excelDL . $filename . " successfully downloaded!");
+                break;
+            }
+            else{
+                print_r($excelDL . $filename . " is NOT downloaded!");
                 break;
             }
         }
