@@ -191,11 +191,9 @@ Feature: Client Manager Dashboard with Lennox Branding
 		When I am authenticated as "sampleManagerLNX@stage.com"
 		When I see welcome message I will close it
 		And I hover on "Feedback"
-		And I click on "View Reviews"	
-		When I see welcome message I will close it	
+		And I click on "View Reviews"		
 		And I click on element "Display All"
 		And I check "sampleCSRLNX"
-		#And I select "Donald" from "techs"
 		And I click on element "Display All"
 		And I select "January" from "start_date-mm"
 		And I select "1" from "start_date-dd"
@@ -208,9 +206,9 @@ Feature: Client Manager Dashboard with Lennox Branding
 	@ClientMngrDownloadExcel
 	Scenario: As Client Manager with LNX I can download excel
 		When I am authenticated as "sampleManagerLNX@stage.com"
-		And I hover on "Feedback"
-		And I click on "View Reviews"		
 		When I see welcome message I will close it
+		And I hover on "Feedback"
+		And I click on "View Reviews"				
 		And I select "January" from "start_date-mm"
 		And I select "1" from "start_date-dd"
 		And I select "2017" from "start_date"			
@@ -242,7 +240,6 @@ Feature: Client Manager Dashboard with Lennox Branding
 		And I click on "View Reviews"		
 		And I click on "See deleted reviews >>"
 		Then I should be on "/clients/reviews/deleted"
-		When I undelete "customer02" review from list
 		And I select "January" from "start_date-mm"
 		And I select "1" from "start_date-dd"
 		And I select "2017" from "start_date"			
