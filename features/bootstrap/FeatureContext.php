@@ -628,13 +628,13 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         }
         else
         {
-            foreach($elementsAll as $element)
-            {
-                if(preg_match('/'. $arg1 .'/', $element->getText()))
+            foreach($elementsAll as $element) {                 
+                $CheckCustomerName = $session->getPage()->find('css',sprintf('tr:contains("%s") > td:nth-child(2)',$arg1)); 
+                if(preg_match('/'. $arg1 .'/', $CheckCustomerName->getText()))
                 {
-                    $deleteLink = $session->getPage()->find('css',
-                        sprintf('td:nth-child(3) > div:contains("%s") > ul > li', $arg1));
-                    $deleteLink->click();
+                    $clickLink = $CheckCustomerName->find('css','div > ul > li > form > input.link');
+                    //print $clickLink->getAttribute('class');
+                    $clickLink->click();
                     $session->getDriver()->getWebDriverSession()->accept_alert();
                     break;
                 }
@@ -644,7 +644,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                     break;
                 }
 
-            }            
+            }          
         }
        
     }
@@ -695,7 +695,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         if (empty($ray_state)) {
             throw new \InvalidArgumentException(sprintf('Delete Review is empty!'));
         }
-        else {
+        else {            
             foreach($elementsAll as $element) {
                 if(preg_match('/'. $arg1 .'/', $element->getText())) {
                     $CheckLink = $session->getPage()->find('css',

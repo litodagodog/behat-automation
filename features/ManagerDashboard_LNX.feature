@@ -240,10 +240,8 @@ Feature: Client Manager Dashboard with Lennox Branding
 		And I click on "View Reviews"		
 		And I click on "See deleted reviews >>"
 		Then I should be on "/clients/reviews/deleted"
-		And I select "January" from "start_date-mm"
-		And I select "1" from "start_date-dd"
-		And I select "2017" from "start_date"			
-		And I press "Search"		
+		When I undelete "customer02" review from list
+		And I wait for 3 seconds
 		Then I should see text matching "customer02"
 		Then I save a screenshot
 

@@ -179,10 +179,10 @@ Feature: Client Manager Dashboard for RB
 	@ClientMngrDeleteReview
 	Scenario: As Client Manager I can Delete a review
 		When I am authenticated as "sampleManager@stage.com"
-		And I delete "sample3" review from list		
+		And I delete "noText" review from list		
 		When I click on "See deleted reviews >>"
 		Then I should be on "/clients/reviews/deleted"
-		Then I should see text matching "sample3"
+		Then I should see text matching "noText"
 		Then I save a screenshot
 
 	@ClientMngrUndeleteReview
@@ -190,8 +190,9 @@ Feature: Client Manager Dashboard for RB
 		When I am authenticated as "sampleManager@stage.com"
 		And I click on "See deleted reviews >>"
 		Then I should be on "/clients/reviews/deleted"
-		When I undelete "sample3" review from list
-		Then I should see text matching "sample3"
+		When I undelete "noText" review from list
+		And I wait for 3 seconds
+		Then I should see text matching "noText"
 		Then I save a screenshot
 
 	@ClientMngrReplyBuzzboxReview
