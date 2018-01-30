@@ -242,14 +242,30 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 }
                 break;
             case 'Continue':
-                $element = $session->getPage()->find('named', array('id', 'submit'));
+                /**$element = $session->getPage()->find('named', array('id', 'submit'));
                 if (null === $element) 
                 {
                     throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
                 }
          
                 $element->click();
-                break;
+                break;**/
+                $element = $session->getPage()->find('named', array('id', 'submit'));
+                if (null === $element) 
+                {
+                    $element = $session->getPage()->find('named', array('id', 'step1_button'));
+                    $session->executeScript('window.scrollTo(0,500);');
+                    if (null === $element) 
+                    {
+                        throw new \InvalidArgumentException(sprintf('Cannot find text: "%s"', $arg1));
+                    }
+                    $element->click();
+                }
+                else
+                {
+                    $element->click();
+                }
+                break;                
             case 'Send': 
                 $element = $session->getPage()->find('named', array('id', 'send-review-request'));
                 if (null === $element) 
@@ -272,7 +288,8 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 break;
             case 'Field/Service':
                 ##frm_add_edit_user > div:nth-child(8) > div > table > tbody > tr:nth-child(2) > td:nth-child(1) > input[type="radio"]
-                $element = $session->getPage()->find("css", '#frm_add_edit_user > div:nth-child(8) > div > table > tbody > tr:nth-child(2) > td:nth-child(1) > input[type="radio"]');
+            #frm_add_edit_user > div:nth-child(6) > div > table > tbody > tr:nth-child(2) > td:nth-child(1) > input[type="radio"]
+                $element = $session->getPage()->find("css", 'table > tbody > tr:nth-child(2) > td:nth-child(1) > input[type="radio"]');
 
                 if (null === $element) 
                 {
@@ -282,7 +299,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 $element->click();
                 break;
             case 'Office Staff':
-                $element = $session->getPage()->find("css", '#frm_add_edit_user > div:nth-child(8) > div > table > tbody > tr:nth-child(3) > td:nth-child(1) > input[type="radio"]');
+                $element = $session->getPage()->find("css", 'table > tbody > tr:nth-child(3) > td:nth-child(1) > input[type="radio"]');
 
                 if (null === $element) 
                 {
@@ -522,7 +539,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                     sprintf('td.member_name:contains("%s")  ul  li:nth-child(2)  a',$subArg1));
                 if($deactivateUser->getText() !== 'deactivate')
                 {
-                    throw new \InvalidArgumentException(sprintf('"%s" : user is already deactivated!', $arg1));
+                    throw new \InvalidArgumentException(sprintf('"%s" : user is already Deactivated!', $arg1));
                 }
                 $deactivateUser->click(); 
                 $session->getDriver()->getWebDriverSession()->accept_alert();
@@ -629,21 +646,38 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         else
         {
             foreach($elementsAll as $element) {                 
-                $CheckCustomerName = $session->getPage()->find('css',sprintf('tr:contains("%s") > td:nth-child(2)',$arg1)); 
-                if(preg_match('/'. $arg1 .'/', $CheckCustomerName->getText()))
-                {
-                    $clickLink = $CheckCustomerName->find('css','div > ul > li > form > input.link');
-                    //print $clickLink->getAttribute('class');
-                    $clickLink->click();
-                    $session->getDriver()->getWebDriverSession()->accept_alert();
-                    break;
+                $CheckCustomerName = $session->getPage()->find('css',sprintf('tr:contains("%s")  td:nth-child(2)',$arg1)); 
+                if ($CheckCustomerName->getText() === ""){
+                    $CheckCustomerName3rd = $session->getPage()->find('css',sprintf('tr:contains("%s")  td:nth-child(3)',$arg1));
+                    if(preg_match('/'. $arg1 .'/', $CheckCustomerName3rd->getText()))
+                    {
+                        $clickLink = $CheckCustomerName3rd->find('css','div > ul > li > form > input.link');
+                        //print $clickLink->getAttribute('class');
+                        $clickLink->click();
+                        $session->getDriver()->getWebDriverSession()->accept_alert();
+                        break;
+                    }
+                    else
+                    {
+                        throw new \InvalidArgumentException(sprintf('"%s" : Review not found!', $arg1));
+                        break;
+                    }                    
                 }
-                else
-                {
-                    throw new \InvalidArgumentException(sprintf('"%s" : Review not found!', $arg1));
-                    break;
+                else{
+                    if(preg_match('/'. $arg1 .'/', $CheckCustomerName->getText()))
+                    {
+                        $clickLink = $CheckCustomerName->find('css','div > ul > li > form > input.link');
+                        //print $clickLink->getAttribute('class');
+                        $clickLink->click();
+                        $session->getDriver()->getWebDriverSession()->accept_alert();
+                        break;
+                    }
+                    else
+                    {
+                        throw new \InvalidArgumentException(sprintf('"%s" : Review not found!', $arg1));
+                        break;
+                    }                    
                 }
-
             }          
         }
        
@@ -1078,5 +1112,111 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         else{
 
         }
+    }
+
+    /**
+     * @When I activate the user :arg1
+     */
+    public function iActivateTheUser($arg1)
+    {
+        sleep(2);
+        $session = $this->getSession();
+        $elementsAll = $session->getPage()->findAll('css','#wizard_employees_table>tbody');        
+        foreach($elementsAll as $element)
+        {
+            $subArg1 = substr($arg1, 0, 11);
+            $checkUser = preg_match('/'. $subArg1 .'/', $element->getText());
+            if($checkUser)
+            {
+                $activateUser = $session->getPage()->find('css',
+                    sprintf('td.member_name:contains("%s")  ul  li:nth-child(2)  a',$subArg1));
+                if($activateUser->getText() !== 'activate')
+                {
+                    throw new \InvalidArgumentException(sprintf('"%s" : user is already Activated!', $arg1));
+                }
+                $activateUser->click(); 
+                $session->getDriver()->getWebDriverSession()->accept_alert();
+                sleep(2);
+                $session->getDriver()->getWebDriverSession()->accept_alert();
+                break;
+            }
+            else
+            {
+                $showInActive = $session->getPage()->find('css',
+                    sprintf('#toggle_hidden_member'));
+                if($showInActive->getText() === 'Show Inactive'){
+                    $showInActive->click();
+                $subArg1 = substr($arg1, 0, 11);
+                $checkUser = preg_match('/'. $subArg1 .'/', $element->getText());
+                    if($checkUser)
+                    {
+                        $activateUser = $session->getPage()->find('css',
+                            sprintf('td.member_name:contains("%s")  ul  li:nth-child(2)  a',$subArg1));
+                        if($activateUser->getText() !== 'activate')
+                        {
+                            throw new \InvalidArgumentException(sprintf('"%s" : user is already Activated!', $arg1));
+                        }
+                        $activateUser->click(); 
+                        $session->getDriver()->getWebDriverSession()->accept_alert();
+                        sleep(2);
+                        $session->getDriver()->getWebDriverSession()->accept_alert();
+                        break;                    
+                    }
+                }
+                else{
+                    throw new \InvalidArgumentException(sprintf('"%s" : user not found!', $arg1));  
+                    break;                      
+                }
+   
+            }
+
+        }
+    }
+
+    /**
+     * @When I go back to main window
+     */
+    public function iGoBackToMainWindow()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When I fill in select2 input :arg1 with :arg2 and select :arg3
+     */
+    public function iFillInSelectInputWithAndSelect($field, $value, $entry)
+    {
+    $page = $this->getSession()->getPage();
+
+    $inputField = $page->find('css', $field);
+    if (!$inputField) {
+        throw new \Exception('No field found');
+    }
+    $inputField->press();
+    sleep(2);
+
+    /**$choice = $inputField->getParent()->find('css', '.select2-selection');
+    if (!$choice) {
+        throw new \Exception('No select2 choice found');
+    }
+    $choice->press(); **/
+
+    $select2Input = $page->find('css', '.select2-search.select2-search--dropdown input');
+    if (!$select2Input) {
+        throw new \Exception('No input found');
+    }
+    $select2Input->setValue($value);
+
+    //$this->getSession()->wait(1000);
+    sleep(5);
+
+    $chosenResults = $page->findAll('css', 'select2-results li');
+    var_dump($chosenResults);
+    foreach ($chosenResults as $result) {
+        if ($result->getText() == $entry) {
+            $result->click();
+            break;
+        }
+    }
     }
 }
