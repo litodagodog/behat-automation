@@ -13,8 +13,8 @@ Feature: Login Functionality
 		Given there are following users:
 			| username | password   |
 			| adminUser    | test123 |
-			| masterAccount    | test123 |
-			| litoLMA@stage.com   | test123 |
+			| litoLMARB@staging.com    | test123 |
+			| litoLMA   | test123 |
         And I am on "/"
 		And I click on login "Client Login"
 		
@@ -28,16 +28,16 @@ Feature: Login Functionality
 
 	@masterUserRB	
     Scenario: Login as Master User for RB
-		When I am authenticated as "masterAccount"
+		When I am authenticated as "litoLMARB@staging.com"
 		Then I should not see "Enter Username or Email and valid password"
 		And I accept the term of use	
 		Then I should be on "/master_account"
-		Then I should see text matching "Hi,masterAccount"
+		Then I should see text matching "Hi,litoLMARB"
 		Then I save a screenshot
 
 	@masterUserLMA	
     Scenario: Login as Master User for LMA
-		When I am authenticated as "litoLMA@stage.com"
+		When I am authenticated as "litoLMA"
 		Then I should not see "Enter Username or Email and valid password"
 		And I accept the term of use	
 		Then I should be on "/master_account/dealers"

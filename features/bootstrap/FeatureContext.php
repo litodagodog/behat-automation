@@ -1181,42 +1181,4 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         throw new PendingException();
     }
 
-    /**
-     * @When I fill in select2 input :arg1 with :arg2 and select :arg3
-     */
-    public function iFillInSelectInputWithAndSelect($field, $value, $entry)
-    {
-    $page = $this->getSession()->getPage();
-
-    $inputField = $page->find('css', $field);
-    if (!$inputField) {
-        throw new \Exception('No field found');
-    }
-    $inputField->press();
-    sleep(2);
-
-    /**$choice = $inputField->getParent()->find('css', '.select2-selection');
-    if (!$choice) {
-        throw new \Exception('No select2 choice found');
-    }
-    $choice->press(); **/
-
-    $select2Input = $page->find('css', '.select2-search.select2-search--dropdown input');
-    if (!$select2Input) {
-        throw new \Exception('No input found');
-    }
-    $select2Input->setValue($value);
-
-    //$this->getSession()->wait(1000);
-    sleep(5);
-
-    $chosenResults = $page->findAll('css', 'select2-results li');
-    var_dump($chosenResults);
-    foreach ($chosenResults as $result) {
-        if ($result->getText() == $entry) {
-            $result->click();
-            break;
-        }
-    }
-    }
 }

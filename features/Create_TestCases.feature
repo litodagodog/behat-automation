@@ -23,7 +23,7 @@ Feature: Create Test Cases
 		Given there are following users:
 			| username | password   |
 			| adminUser    | test123 |
-			| prodtestManager02    | test123 |
+			| sampleManager002    | test123 |
 			| prodtestMaster    | test123 |
 			| prodtest8csr    | test123 |
 			| prodtest8tech    | test123 |
@@ -59,11 +59,12 @@ Feature: Create Test Cases
 		And I hover on "Client Management"
 		And I click on "Manage User Accounts"
 		And I click on "Add User"
-		And I fill in "username" with "prodtestManager02"
-		And I fill in "email" with "prodtestManager02@stage.com"
+		And I fill in "username" with "sampleManager002"
+		And I fill in "email" with "sampleManager002@staging.com"
 		And I fill in "password" with "test123"
 		And I fill in "password_confirm" with "test123"
-		And I select "Auto001NewClient" from "clients_id"
+		#And I select "Auto001NewClient" from "clients_id"
+		And I fill in select2 input "#select2-client-select2-container" with "sample" and select "sampleClient001"
 		And I select "client" from "memberships"
 		When I press "Save"
 		Then I should not see text matching "The username you entered"
@@ -71,10 +72,11 @@ Feature: Create Test Cases
 		
 	@loginAsClientManager
 	Scenario: Login as new Client Manager User
-		When I am authenticated as "prodtestManager02"
+		When I am authenticated as "sampleManager002"
 		And I accept the term of use
-		When I click on "Dashboard Manager Pro"
-		Then I should be on "/clients"
+		#When I click on "Dashboard Manager Pro"
+		Then I should be on "/clients/reviews"
+		When I see welcome message I will close it
 		Then I save a screenshot
 		
 	@createMasterUser
@@ -109,7 +111,7 @@ Feature: Create Test Cases
 		And I fill in "email" with "prodtest8csr@stage.com"
 		And I fill in "password" with "test123"
 		And I fill in "password_confirm" with "test123"
-		And I select "Auto001NewClient" from "clients_id"
+		And I fill in select2 input "#select2-client-select2-container" with "sample" and select "sampleClient001"
 		And I select "csr" from "memberships"
 		When I press "Save"
 		Then I should not see text matching "The username you entered"
@@ -133,7 +135,7 @@ Feature: Create Test Cases
 		And I fill in "email" with "prodtest8tech@stage.com"
 		And I fill in "password" with "test123"
 		And I fill in "password_confirm" with "test123"
-		And I select "Auto001NewClient" from "clients_id"
+		And I fill in select2 input "#select2-client-select2-container" with "sample" and select "sampleClient001"
 		And I select "technician" from "memberships"
 		When I press "Save"
 		Then I should not see text matching "The username you entered"
